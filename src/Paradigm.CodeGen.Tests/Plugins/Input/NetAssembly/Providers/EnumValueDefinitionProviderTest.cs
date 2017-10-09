@@ -56,7 +56,7 @@ namespace Paradigm.CodeGen.Tests.Plugins.Input.NetAssembly.Providers
                                                                                  })
                                                                     .ToList();
 
-            foreach (Dictionary<string, object> enumRes in zippedEnumValueDefinition)
+            foreach (var enumRes in zippedEnumValueDefinition)
             {
                 enumRes["EnumValue"].ToString().Should().Equals(((EnumValueDefinition)enumRes["EnumValueDefinition"]).Name);
                 this.GetEnumValue(baseType, (Enum)enumRes["EnumValue"]).Should().Equals(((EnumValueDefinition)enumRes["EnumValueDefinition"]).Value);
@@ -75,7 +75,7 @@ namespace Paradigm.CodeGen.Tests.Plugins.Input.NetAssembly.Providers
         [TestCase(typeof(MockEnumSByte), typeof(sbyte))]
         public void ShouldEqualNameAndValueInProcessMethod(Type enumType, Type baseType)
         {
-            IObjectDefinitions<Type> objectDefinitions = this.ContainerFixture.Container.Resolve<IObjectDefinitions<Type>>();
+            var objectDefinitions = this.ContainerFixture.Container.Resolve<IObjectDefinitions<Type>>();
 
             var zippedEnumValueDefinition = Enum.GetValues(enumType).Cast<object>()
                                                                     .Select(x => new Dictionary<string, object>
@@ -85,7 +85,7 @@ namespace Paradigm.CodeGen.Tests.Plugins.Input.NetAssembly.Providers
                                                                                  })
                                                                     .ToList();
 
-            foreach (Dictionary<string, object> enumRes in zippedEnumValueDefinition)
+            foreach (var enumRes in zippedEnumValueDefinition)
             {
                 enumRes["EnumValue"].ToString().Should().Equals(((EnumValueDefinition)enumRes["EnumValueDefinition"]).Name);
                 this.GetEnumValue(baseType, (Enum)enumRes["EnumValue"]).Should().Equals(((EnumValueDefinition)enumRes["EnumValueDefinition"]).Value);

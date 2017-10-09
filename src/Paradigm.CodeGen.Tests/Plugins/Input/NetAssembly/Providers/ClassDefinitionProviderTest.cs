@@ -57,7 +57,7 @@ namespace Paradigm.CodeGen.Tests.Plugins.Input.NetAssembly.Providers
         public void ClassDefinitionProvider_Process()
         {
             //Act
-            IObjectDefinitions<Type> objectDefinitions = this.ContainerFixture.Container.Resolve<IObjectDefinitions<Type>>();
+            var objectDefinitions = this.ContainerFixture.Container.Resolve<IObjectDefinitions<Type>>();
             var result = this.ContainerFixture.ClassProvider.Process(this.ContainerFixture.ClassProvider.GetFromSource(typeof(TestClass)), objectDefinitions, typeof(TestClass)) as ClassDefinition;
 
             //Assert
@@ -96,7 +96,7 @@ namespace Paradigm.CodeGen.Tests.Plugins.Input.NetAssembly.Providers
         public void ClassDefinitionProvider_ProcessImplements()
         {
             //Arrange
-            IObjectDefinitions<Type> objectDefinitions = this.ContainerFixture.Container.Resolve<IObjectDefinitions<Type>>();
+            var objectDefinitions = this.ContainerFixture.Container.Resolve<IObjectDefinitions<Type>>();
 
             //Act
             var result = this.ContainerFixture.ClassProvider.Process(this.ContainerFixture.ClassProvider.GetFromSource(typeof(TestClassImplements)), objectDefinitions, typeof(TestClassImplements)) as ClassDefinition;
@@ -145,7 +145,7 @@ namespace Paradigm.CodeGen.Tests.Plugins.Input.NetAssembly.Providers
         public void ClassDefinitionProvider_ProcessAbstract()
         {
             //Arrange
-            IObjectDefinitions<Type> objectDefinitions = this.ContainerFixture.Container.Resolve<IObjectDefinitions<Type>>();
+            var objectDefinitions = this.ContainerFixture.Container.Resolve<IObjectDefinitions<Type>>();
 
             //Act
             var result = this.ContainerFixture.ClassProvider.Process(this.ContainerFixture.ClassProvider.GetFromSource(typeof(TestAbstractClass)), objectDefinitions, typeof(TestAbstractClass)) as ClassDefinition;
@@ -186,7 +186,7 @@ namespace Paradigm.CodeGen.Tests.Plugins.Input.NetAssembly.Providers
         public void ClassDefinitionProvider_ProcessExtends()
         {
             //Arrange
-            IObjectDefinitions<Type> objectDefinitions = this.ContainerFixture.Container.Resolve<IObjectDefinitions<Type>>();
+            var objectDefinitions = this.ContainerFixture.Container.Resolve<IObjectDefinitions<Type>>();
 
             //Act
             var result = this.ContainerFixture.ClassProvider.Process(this.ContainerFixture.ClassProvider.GetFromSource(typeof(TestClassExtends)), objectDefinitions, typeof(TestClassExtends)) as ClassDefinition;
@@ -227,7 +227,7 @@ namespace Paradigm.CodeGen.Tests.Plugins.Input.NetAssembly.Providers
         public void ClassDefinitionProvider_ProcessInterface()
         {
             //Arrange
-            IObjectDefinitions<Type> objectDefinitions = this.ContainerFixture.Container.Resolve<IObjectDefinitions<Type>>();
+            var objectDefinitions = this.ContainerFixture.Container.Resolve<IObjectDefinitions<Type>>();
 
             //Act
             var result = this.ContainerFixture.ClassProvider.Process(this.ContainerFixture.ClassProvider.GetFromSource(typeof(ITestClass)), objectDefinitions, typeof(ITestClass)) as ClassDefinition;

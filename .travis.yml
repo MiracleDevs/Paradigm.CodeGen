@@ -1,9 +1,7 @@
 language: csharp
-mono: latest
 dotnet: 2.0.0
 install:
 - dotnet restore ./src/Paradigm.CodeGen.sln
-- nuget install NUnit.Runners -Version 3.7.0 -OutputDirectory testrunner
 script:
 - dotnet build ./src/Paradigm.CodeGen.sln
-- mono testrunner/NUnit.ConsoleRunner.3.7.0/tools/nunit3-console.exe src/Paradigm.CodeGen.Tests/bin/Debug/netcoreapp1.0/Paradigm.CodeGen.Tests.dll
+- dotnet test ./src/Paradigm.CodeGen.Tests/Paradigm.CodeGen.Tests.csproj

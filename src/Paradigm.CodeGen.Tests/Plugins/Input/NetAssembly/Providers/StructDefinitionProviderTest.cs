@@ -52,7 +52,7 @@ namespace Paradigm.CodeGen.Tests.Plugins.Input.NetAssembly.Providers
         public void StructDefinitionProvider_Process()
         {
             //Arrange
-            IObjectDefinitions<Type> objectDefinitions = this.ContainerFixture.Container.Resolve<IObjectDefinitions<Type>>();
+            var objectDefinitions = this.ContainerFixture.Container.Resolve<IObjectDefinitions<Type>>();
 
             //Act
             var result = this.ContainerFixture.StructProvider.Process(this.ContainerFixture.StructProvider.GetFromSource(typeof(MockStructBase)), objectDefinitions, typeof(MockStructBase)) as StructDefinition;

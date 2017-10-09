@@ -81,7 +81,7 @@ namespace Paradigm.CodeGen.Tests.Plugins.Input.NetAssembly.Providers
         [Test]
         public void ShouldEqualNameValueAndIsNumericInProcessMethod()
         { 
-            IObjectDefinitions<Type> objectDefinitions = this.ContainerFixture.Container.Resolve<IObjectDefinitions<Type>>();
+            var objectDefinitions = this.ContainerFixture.Container.Resolve<IObjectDefinitions<Type>>();
             var attribute = new MockBaseAttribute();
             var type = attribute.GetType();
 

@@ -56,7 +56,7 @@ namespace Paradigm.CodeGen.Tests.Plugins.Input.NetAssembly.Providers
         {
             //Arrange
             var attribute = new MockBaseAttribute();
-            IObjectDefinitions<Type> objectDefinitions = this.ContainerFixture.Container.Resolve<IObjectDefinitions<Type>>();
+            var objectDefinitions = this.ContainerFixture.Container.Resolve<IObjectDefinitions<Type>>();
 
             //Act
             var result = this.ContainerFixture.AttributeProvider.Process(this.ContainerFixture.AttributeProvider.GetFromSource(attribute), objectDefinitions, attribute);
@@ -65,7 +65,7 @@ namespace Paradigm.CodeGen.Tests.Plugins.Input.NetAssembly.Providers
             result.Should().NotBeNull();
             result.Name.Should().Be(nameof(MockBaseAttribute));
             result.Parameters.Should().NotBeNull();
-            result.Parameters.Count.Should().Be(5);
+            result.Parameters.Count.Should().Be(4);
 
             //Parameters Assertion
             result.Parameters.Select(x => x.Name).Contains("PrivateAttr").Should().BeFalse();
@@ -73,11 +73,11 @@ namespace Paradigm.CodeGen.Tests.Plugins.Input.NetAssembly.Providers
         }
 
         [Test]
-        public void AttributeProvider_ProcessInherance()
+        public void AttributeProvider_ProcessInheritance()
         {
             //Arrange
             var attribute = new MockAttribute();
-            IObjectDefinitions<Type> objectDefinitions = this.ContainerFixture.Container.Resolve<IObjectDefinitions<Type>>();
+            var objectDefinitions = this.ContainerFixture.Container.Resolve<IObjectDefinitions<Type>>();
 
             //Act
             var result = this.ContainerFixture.AttributeProvider.Process(this.ContainerFixture.AttributeProvider.GetFromSource(attribute), objectDefinitions, attribute);
@@ -86,7 +86,7 @@ namespace Paradigm.CodeGen.Tests.Plugins.Input.NetAssembly.Providers
             result.Should().NotBeNull();
             result.Name.Should().Be(nameof(MockAttribute));
             result.Parameters.Should().NotBeNull();
-            result.Parameters.Count.Should().Be(6);
+            result.Parameters.Count.Should().Be(5);
 
             //Parameters Assertion
             result.Parameters.Select(x => x.Name).Contains("PrivateAttr").Should().BeFalse();

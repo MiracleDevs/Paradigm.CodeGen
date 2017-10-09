@@ -54,7 +54,7 @@ namespace Paradigm.CodeGen.Tests.Plugins.Input.NetAssembly.Providers
         public void ShouldEqualNameAttributesParametersAndReturnTypeInProcessMethod()
         {
             
-            IObjectDefinitions<Type> objectDefinitions = this.ContainerFixture.Container.Resolve<IObjectDefinitions<Type>>();
+            var objectDefinitions = this.ContainerFixture.Container.Resolve<IObjectDefinitions<Type>>();
             var attribute = new TestClass();
             var allMethods = attribute.GetType().GetMethods();
 

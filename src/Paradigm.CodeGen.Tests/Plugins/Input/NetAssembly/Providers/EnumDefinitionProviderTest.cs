@@ -38,7 +38,7 @@ namespace Paradigm.CodeGen.Tests.Plugins.Input.NetAssembly.Providers
         [Test]
         public void ShouldAttributesBeZero()
         {
-            IObjectDefinitions<Type> objectDefinitions = this.ContainerFixture.Container.Resolve<IObjectDefinitions<Type>>();
+            var objectDefinitions = this.ContainerFixture.Container.Resolve<IObjectDefinitions<Type>>();
 
             var enumType = typeof(MockEnum);
 
@@ -66,7 +66,7 @@ namespace Paradigm.CodeGen.Tests.Plugins.Input.NetAssembly.Providers
         [TestCase(typeof(MockEnumSByte))]
         public void ShouldValuesCountBeCorrect(Type enumType)
         { 
-            IObjectDefinitions<Type> objectDefinitions = this.ContainerFixture.Container.Resolve<IObjectDefinitions<Type>>();
+            var objectDefinitions = this.ContainerFixture.Container.Resolve<IObjectDefinitions<Type>>();
 
             var result = this.ContainerFixture.EnumProvider.Process(this.ContainerFixture.EnumProvider.GetFromSource(enumType), objectDefinitions, enumType) as EnumDefinition;
 
