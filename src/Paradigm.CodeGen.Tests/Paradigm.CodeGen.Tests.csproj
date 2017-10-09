@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>    
+    <TargetFramework>netcoreapp1.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="4.19.4" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="1.1.18" />
+    <PackageReference Include="MSTest.TestFramework" Version="1.1.18" />
+    <PackageReference Include="NUnit" Version="3.8.1" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.8.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Paradigm.CodeGen.Extensions\Paradigm.CodeGen.Extensions.csproj" />
+    <ProjectReference Include="..\Paradigm.CodeGen.Input.Json.Models\Paradigm.CodeGen.Input.Json.Models.csproj" />
+    <ProjectReference Include="..\Paradigm.CodeGen.Input.Json\Paradigm.CodeGen.Input.Json.csproj" />
+    <ProjectReference Include="..\Paradigm.CodeGen.Input.Models\Paradigm.CodeGen.Input.Models.csproj" />
+    <ProjectReference Include="..\Paradigm.CodeGen.Input.NetAssembly\Paradigm.CodeGen.Input.NetAssembly.csproj" />
+    <ProjectReference Include="..\Paradigm.CodeGen.Input\Paradigm.CodeGen.Input.csproj" />
+    <ProjectReference Include="..\Paradigm.CodeGen.Logging\Paradigm.CodeGen.Logging.csproj" />
+    <ProjectReference Include="..\Paradigm.CodeGen.Output.Models\Paradigm.CodeGen.Output.Models.csproj" />
+    <ProjectReference Include="..\Paradigm.CodeGen.Output.NamingRules\Paradigm.CodeGen.Output.NamingRules.csproj" />
+    <ProjectReference Include="..\Paradigm.CodeGen.Output.Razor\Paradigm.CodeGen.Output.Razor.csproj" />
+    <ProjectReference Include="..\Paradigm.CodeGen.Output.TypeMatchers\Paradigm.CodeGen.Output.TypeMatchers.csproj" />
+    <ProjectReference Include="..\Paradigm.CodeGen.Output\Paradigm.CodeGen.Output.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+
+</Project>

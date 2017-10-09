@@ -1,0 +1,57 @@
+﻿[
+  { "Name": "System.SByte",                       "Translation": "sbyte" },
+  { "Name": "System.Int16",                       "Translation": "short" },
+  { "Name": "System.Int32",                       "Translation": "int" },
+  { "Name": "System.Int64",                       "Translation": "long" },
+  { "Name": "System.Single",                      "Translation": "float" },
+  { "Name": "System.Double",                      "Translation": "double" },
+  { "Name": "System.Decimal",                     "Translation": "decimal" },
+  { "Name": "System.Byte",                        "Translation": "byte" },
+  { "Name": "System.UInt16",                      "Translation": "ushort" },
+  { "Name": "System.UInt32",                      "Translation": "uint" },
+  { "Name": "System.UInt64",                      "Translation": "ulong" },                             
+  { "Name": "System.Char",                        "Translation": "char" },
+  { "Name": "System.String",                      "Translation": "string" },
+  { "Name": "System.Byte[]",                      "Translation": "byte[]" },
+  { "Name": "System.Boolean",                     "Translation": "bool"},
+  { "Name": "System.DateTime",                    "Translation": "DateTime"},
+  { "Name": "System.Void",                        "Translation": "void"   },
+  { "Name": "System.Nullable<SByte>",             "Translation": "sbyte?" },
+  { "Name": "System.Nullable<Int16>",             "Translation": "short?" },
+  { "Name": "System.Nullable<Int32>",             "Translation": "int?" },
+  { "Name": "System.Nullable<Int64>",             "Translation": "long?" },
+  { "Name": "System.Nullable<Single>",            "Translation": "float?" },
+  { "Name": "System.Nullable<Double>",            "Translation": "double?" },
+  { "Name": "System.Nullable<Decimal>",           "Translation": "decimal?" },
+  { "Name": "System.Nullable<Byte>",              "Translation": "byte?" },
+  { "Name": "System.Nullable<UInt16>",            "Translation": "ushort?" },
+  { "Name": "System.Nullable<UInt32>",            "Translation": "uint?" },
+  { "Name": "System.Nullable<UInt64>",            "Translation": "ulong?" },                             
+  { "Name": "System.Nullable<Char>",              "Translation": "char?" },                    
+  { "Name": "System.Nullable<Boolean>",           "Translation": "bool?"},
+  { "Name": "System.Nullable<DateTime>",          "Translation": "DateTime?" }
+]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

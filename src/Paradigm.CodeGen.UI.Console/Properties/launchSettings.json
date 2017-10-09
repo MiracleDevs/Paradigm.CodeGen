@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "Paradigm.CodeGen.UI.Console": {
+      "commandName": "Project"
+    }
+  }
+}

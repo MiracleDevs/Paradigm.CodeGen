@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.6</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Paradigm.Core.Assemblies" Version="1.0.1" />
+    <PackageReference Include="Paradigm.Core.DependencyInjection" Version="1.0.1" />
+    <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Paradigm.CodeGen.Input.Models\Paradigm.CodeGen.Input.Models.csproj" />
+  </ItemGroup>
+
+</Project>
