@@ -3,7 +3,7 @@ mono: latest
 dotnet: 2.0.0
 install:
 - dotnet restore ./src/Paradigm.CodeGen.sln
-- nuget install NUnit.Runners -Version 3.8.0 -OutputDirectory testrunner
+- nuget install NUnit.Runners -Version 3.7.0 -OutputDirectory testrunner
 script:
 - dotnet build ./src/Paradigm.CodeGen.sln
-- mono testrunner/NUnit.ConsoleRunner.3.8.0/tools/nunit3-console.exe src/Paradigm.CodeGen.Tests/bin/Release/netcoreapp.10/Paradigm.CodeGen.Tests.dll
+- mono testrunner/NUnit.ConsoleRunner.3.7.0/tools/nunit3-console.exe src/Paradigm.CodeGen.Tests/bin/Release/netcoreapp.10/Paradigm.CodeGen.Tests.dll
