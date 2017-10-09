@@ -6,4 +6,4 @@ install:
 - nuget install NUnit.Runners -Version 3.7.0 -OutputDirectory testrunner
 script:
 - dotnet build ./src/Paradigm.CodeGen.sln
-- mono testrunner/NUnit.ConsoleRunner.3.7.0/tools/nunit3-console.exe src/Paradigm.CodeGen.Tests/bin/Debug/netcoreapp.10/Paradigm.CodeGen.Tests.dll
+- mono testrunner/NUnit.ConsoleRunner.3.7.0/tools/nunit3-console.exe src/Paradigm.CodeGen.Tests/bin/Debug/netcoreapp1.0/Paradigm.CodeGen.Tests.dll
