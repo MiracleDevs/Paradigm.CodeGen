@@ -1,9 +1,6 @@
 language: csharp
-dist: trusty
 mono: latest
-dotnet:
-- 1.0.1
-- 2.0.0
+dotnet: 2.0.0
 install:
 - dotnet restore ./src/Paradigm.Core.sln
 - nuget install NUnit.Runners -Version 3.8.0 -OutputDirectory testrunner
