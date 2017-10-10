@@ -21,5 +21,8 @@ If you have your code already in place and can not create a new plugin for CodeG
 Change log
 ---
 
+Version `2.0.0`
+- Updated .net core from version 1 to version 2.
+
 Version `1.0.0`
 - Uploaded first version of the Paradigm CodeGen.
