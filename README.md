@@ -22,7 +22,7 @@ Change log
 ---
 
 Version `2.0.1`
-- Updated Paradigm.Core to `2.0.1`.
+- Updated Paradigm.Core to version `2.0.1`.
 
 Version `2.0.0`
 - Updated .net core from version 1 to version 2.
