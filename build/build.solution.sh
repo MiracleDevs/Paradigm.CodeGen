@@ -15,7 +15,7 @@ block "$index - Build Solution"
 #------------------------------------------------
 # BUILD SOLUTION
 #------------------------------------------------
-execute "dotnet restore ../src/"
-execute "dotnet build ../src/ -c Release"
+execute "dotnet restore ../src/ -v q"
+execute "dotnet build ../src/ -c Release -v q"
 
 buildSuccessfully

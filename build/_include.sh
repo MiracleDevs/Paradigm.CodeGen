@@ -47,7 +47,10 @@ function buildFailed()
 
 function execute()
 {
-	echo -e ${C_DARK_GRAY} $1 ${C_TRANSPARENT}
+	text=$2
+	if [[ $text == "" ]]; then text="$1"; fi
+
+	echo -e ${C_DARK_GRAY} $text ${C_TRANSPARENT}
 	$1
 	if [[ $? -ne 0 ]]; then buildFailed; fi
 }
