@@ -11,8 +11,8 @@ The codegen tool comes with two input methods out of the box:
 - .NET CORE Assemblies
 - JSON object model
 
-Working with .NET is ideal, because Codegen can open and extract its intermediate model
-from assemblies. But if you are using another language (Java, Object-c, typescript, javascript, etc) you
+Working with .NET is ideal, because Codegen can open and extract types (codegen intermediate model) directly from the assemblies.
+But if you are using another language (Java, Object-c, typescript, javascript, etc) you
 can still take adventage of the tool by providing a json file with object definitions.
 
 If you want to populate the json file yourself, and you are developing in .NET, you can download the
@@ -26,9 +26,8 @@ following package that will give you the json file structure.
 Self Contained Deploy (SCD)
 ---
 
-Bellow you can find portable version for all major OSs. Download the compiled version to streamline
-your code generation process. If you are planning to use codegen in several projects, adding the directory
-to your PATH could be a good idea.
+Bellow you can find portable versions for all major OSs.
+If you are planning to use codegen in several projects, we recommend to add the SCD folder to your PATH.
 
 | OS | Zip File |
 |-|-|
