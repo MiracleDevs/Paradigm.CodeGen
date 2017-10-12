@@ -1,0 +1,559 @@
+﻿{
+  "input": {
+    "inputType": "Json",
+    "parameters": [
+      {
+        "name": "jsonFiles",
+        "value": "json.objectmodel.dbf"
+      }
+    ]
+  },
+  "output": {
+    "outputType": "Razor",
+    "parameters": [
+      {
+        "name": "nativeTypeTranslatorsPath",
+        "value": "../../templates/csharp/orm/translations.json"
+      }
+    ],
+    "summary": {
+      "outputFileName": "path/to/my/webapi/DI/generation.shared.txt",
+      "templatePath": "../../templates/csharp/orm/summary.tpl"
+    },
+    "outputFiles": [
+      /* STORED PROCEDURE PARAMETER */
+      {
+        "name": "StoredProcedureParameter",
+        "templatePath": "../../templates/csharp/orm/storedprocedures/parameters.tpl",
+        "outputPath": "path/to/my/solution/Domain/Shared/Entities/",
+        "typeMatchers": [
+          {
+            "name": "ContainsAttribute",
+            "parameters": [
+              "RoutineAttribute"
+            ]
+          }
+        ],
+        "namingRules": [
+          {
+            "name": "Format",
+            "parameters": [
+              "{0}Parameters.cs"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Namespace",
+            "value": "Domain.Shared.Entities"
+          }
+        ]
+      },
+      /* STORED PROCEDURE INTERFACE */
+      {
+        "name": "StoredProcedure",
+        "templatePath": "../../templates/csharp/orm/storedprocedures/istoredprocedure.tpl",
+        "outputPath": "path/to/my/solution/Data/Shared/StoredProcedures/",
+        "typeMatchers": [
+          {
+            "name": "ContainsAttribute",
+            "parameters": [
+              "RoutineAttribute"
+            ]
+          }
+        ],
+        "namingRules": [
+          {
+            "name": "Format",
+            "parameters": [
+              "I{0}StoredProcedure.cs"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Namespace",
+            "value": "Data.Shared.StoredProcedures"
+          },
+          {
+            "name": "DomainNamespace",
+            "value": "Domain.Shared.Entities"
+          }
+        ]
+      },
+      /* STORED PROCEDURE */
+      {
+        "name": "StoredProcedure",
+        "templatePath": "../../templates/csharp/orm/storedprocedures/storedprocedure.tpl",
+        "outputPath": "path/to/my/solution/Data/Shared/StoredProcedures/",
+        "typeMatchers": [
+          {
+            "name": "ContainsAttribute",
+            "parameters": [
+              "RoutineAttribute"
+            ]
+          }
+        ],
+        "namingRules": [
+          {
+            "name": "Format",
+            "parameters": [
+              "{0}StoredProcedure.cs"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Namespace",
+            "value": "Data.Shared.StoredProcedures"
+          },
+          {
+            "name": "DomainNamespace",
+            "value": "Domain.Shared.Entities"
+          },
+          {
+            "name": "MapperNamespace",
+            "value": "Data.Shared.Mappers"
+          }
+        ]
+      },
+      /* READ REPOSITORY INTERFACE */
+      {
+        "name": "ReadRepositoryInterface",
+        "templatePath": "../../templates/csharp/orm/repositories/ireadrepository.tpl",
+        "outputPath": "path/to/my/solution/Domain/Shared/Repositories/",
+        "typeMatchers": [
+          {
+            "name": "ContainsAttribute",
+            "parameters": [
+              "TableAttribute"
+            ]
+          },
+          {
+            "name": "NameEndsWith",
+            "parameters": [
+              "View"
+            ]
+          },
+          {
+            "name": "NameIn",
+            "parameters": [
+              /* List of object names to ignore */
+            ],
+            "negate": true
+          }
+        ],
+        "namingRules": [
+          {
+            "name": "Format",
+            "parameters": [
+              "I{0}Repository.cs"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Namespace",
+            "value": "Domain.Shared.Repositories"
+          },
+          {
+            "name": "DomainNamespace",
+            "value": "Domain.Shared.Entities"
+          }
+        ]
+      },
+      /* EDIT REPOSITORY INTERFACE */
+      {
+        "name": "EditRepositoryInterface",
+        "templatePath": "../../templates/csharp/orm/repositories/ieditrepository.tpl",
+        "outputPath": "path/to/my/solution/Domain/Shared/Repositories/",
+        "typeMatchers": [
+          {
+            "name": "ContainsAttribute",
+            "parameters": [
+              "TableAttribute"
+            ]
+          },
+          {
+            "name": "NameEndsWith",
+            "parameters": [
+              "View"
+            ],
+            "negate": true
+          }
+        ],
+        "namingRules": [
+          {
+            "name": "Format",
+            "parameters": [
+              "I{0}Repository.cs"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Namespace",
+            "value": "Domain.Shared.Repositories"
+          },
+          {
+            "name": "DomainNamespace",
+            "value": "Domain.Shared.Entities"
+          }
+        ]
+      },
+      /* READ REPOSITORY */
+      {
+        "name": "ReadRepository",
+        "templatePath": "../../templates/csharp/orm/repositories/readrepository.tpl",
+        "outputPath": "path/to/my/solution/Data/Shared/Repositories/",
+        "typeMatchers": [
+          {
+            "name": "ContainsAttribute",
+            "parameters": [
+              "TableAttribute"
+            ]
+          },
+          {
+            "name": "NameEndsWith",
+            "parameters": [
+              "View"
+            ]
+          },
+          {
+            "name": "NameIn",
+            "parameters": [
+              /* List of object names to ignore */
+            ],
+            "negate": true
+          }
+        ],
+        "namingRules": [
+          {
+            "name": "Format",
+            "parameters": [
+              "{0}Repository.cs"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Namespace",
+            "value": "Data.Shared.Repositories"
+          },
+          {
+            "name": "DatabaseAccessNamespace",
+            "value": "Data.Shared.DatabaseAccess"
+          },
+          {
+            "name": "DomainEntitiesNamespace",
+            "value": "Domain.Shared.Entities"
+          },
+          {
+            "name": "DomainRepositoriesNamespace",
+            "value": "Domain.Shared.Repositories"
+          }
+        ]
+      },
+      /* EDIT REPOSITORY */
+      {
+        "name": "EditRepository",
+        "templatePath": "../../templates/csharp/orm/repositories/editrepository.tpl",
+        "outputPath": "path/to/my/solution/Data/Shared/Repositories/",
+        "typeMatchers": [
+          {
+            "name": "ContainsAttribute",
+            "parameters": [
+              "TableAttribute"
+            ]
+          },
+          {
+            "name": "NameEndsWith",
+            "parameters": [
+              "View"
+            ],
+            "negate": true
+          }
+        ],
+        "namingRules": [
+          {
+            "name": "Format",
+            "parameters": [
+              "{0}Repository.cs"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Namespace",
+            "value": "Data.Shared.Repositories"
+          },
+          {
+            "name": "DatabaseAccessNamespace",
+            "value": "Data.Shared.DatabaseAccess"
+          },
+          {
+            "name": "DomainEntitiesNamespace",
+            "value": "Domain.Shared.Entities"
+          },
+          {
+            "name": "DomainRepositoriesNamespace",
+            "value": "Domain.Shared.Repositories"
+          }
+        ]
+      },
+      /* DOMAIN INTERFACE */
+      {
+        "name": "DomainInterface",
+        "templatePath": "../../templates/csharp/orm/domaininterfaces/domaininterface.tpl",
+        "outputPath": "path/to/my/solution/Interfaces/Shared/Entities/",
+        "typeMatchers": [
+          {
+            "name": "ContainsAttribute",
+            "parameters": [
+              "TableAttribute"
+            ]
+          },
+          {
+            "name": "NameEndsWith",
+            "parameters": [
+              "View"
+            ],
+            "negate": true
+          }
+        ],
+        "namingRules": [
+          {
+            "name": "Format",
+            "parameters": [
+              "I{0}.cs"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Namespace",
+            "value": "Interfaces.Shared.Entities"
+          },
+          {
+            "name": "ValidationResourceType",
+            "value": "InterfaceValidationResource"
+          }
+        ]
+      },
+      /* TABLE INTERFACE */
+      {
+        "name": "TableInterface",
+        "templatePath": "../../templates/csharp/orm/tables/tableinterface.tpl",
+        "outputPath": "path/to/my/solution/Tables/Shared/",
+        "typeMatchers": [
+          {
+            "name": "ContainsAttribute",
+            "parameters": [
+              "TableAttribute"
+            ]
+          }
+        ],
+        "namingRules": [
+          {
+            "name": "Format",
+            "parameters": [
+              "I{0}Table.cs"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Namespace",
+            "value": "Tables.Shared"
+          },
+          {
+            "name": "InterfacesNamespace",
+            "value": "Interfaces.Shared.Entities"
+          }
+        ]
+      },
+      /* DOMAIN ENTITY */
+      {
+        "name": "DomainEntity",
+        "templatePath": "../../templates/csharp/orm/domainentities/domainentity.tpl",
+        "outputPath": "path/to/my/solution/Domain/Shared/Entities/",
+        "typeMatchers": [
+          {
+            "name": "ContainsAttribute",
+            "parameters": [
+              "TableAttribute"
+            ]
+          }
+        ],
+        "namingRules": [
+          {
+            "name": "Format",
+            "parameters": [
+              "{0}.cs"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Namespace",
+            "value": "Domain.Shared.Entities"
+          },
+          {
+            "name": "InterfacesNamespace",
+            "value": "Interfaces.Shared.Entities"
+          },
+          {
+            "name": "TablesNamespace",
+            "value": "Tables.Shared"
+          },
+          {
+            "name": "IgnoreProperties",
+            "value": "Id, Timestamp"
+          }
+        ]
+      },
+      /* DATABASE ACCESS INTERFACE */
+      {
+        "name": "DatabaseAccessInterface",
+        "templatePath": "../../templates/csharp/orm/databaseaccess/idatabaseaccess.tpl",
+        "outputPath": "path/to/my/solution/Data/Shared/DatabaseAccess/",
+        "typeMatchers": [
+          {
+            "name": "ContainsAttribute",
+            "parameters": [
+              "TableAttribute"
+            ]
+          },
+          {
+            "name": "NameIn",
+            "parameters": [
+              /* List of object names to ignore */
+            ],
+            "negate": true
+          }
+        ],
+        "namingRules": [
+          {
+            "name": "Format",
+            "parameters": [
+              "I{0}DatabaseAccess.cs"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Namespace",
+            "value": "Data.Shared.DatabaseAccess"
+          },
+          {
+            "name": "DomainNamespace",
+            "value": "Domain.Shared.Entities"
+          }
+        ]
+      },
+      /* DATABASE ACCESS */
+      {
+        "name": "DatabaseAccess",
+        "templatePath": "../../templates/csharp/orm/databaseaccess/databaseaccess.tpl",
+        "outputPath": "path/to/my/solution/Data/Shared/DatabaseAccess/",
+        "typeMatchers": [
+          {
+            "name": "ContainsAttribute",
+            "parameters": [
+              "TableAttribute"
+            ]
+          },
+          {
+            "name": "NameIn",
+            "parameters": [
+              /* List of object names to ignore */
+            ],
+            "negate": true
+          }
+        ],
+        "namingRules": [
+          {
+            "name": "Format",
+            "parameters": [
+              "{0}DatabaseAccess.cs"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Namespace",
+            "value": "Data.Shared.DatabaseAccess"
+          },
+          {
+            "name": "DomainNamespace",
+            "value": "Domain.Shared.Entities"
+          }
+        ]
+      },
+      /* DATA READER MAPPER INTERFACE */
+      {
+        "name": "DatabaseReaderMapperInterface",
+        "templatePath": "../../templates/csharp/orm/mappers/imapper.tpl",
+        "outputPath": "path/to/my/solution/Data/Shared/Mappers/",
+        "typeMatchers": [
+          {
+            "name": "ContainsAttribute",
+            "parameters": [
+              "TableAttribute"
+            ]
+          }
+        ],
+        "namingRules": [
+          {
+            "name": "Format",
+            "parameters": [
+              "I{0}DatabaseReaderMapper.cs"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Namespace",
+            "value": "Data.Shared.Mappers"
+          },
+          {
+            "name": "DomainNamespace",
+            "value": "Domain.Shared.Entities"
+          }
+        ]
+      },
+      /* DATA READER MAPPER */
+      {
+        "name": "DatabaseReaderMapper",
+        "templatePath": "../../templates/csharp/orm/mappers/mapper.tpl",
+        "outputPath": "path/to/my/solution/Data/Shared/Mappers/",
+        "typeMatchers": [
+          {
+            "name": "ContainsAttribute",
+            "parameters": [
+              "TableAttribute"
+            ]
+          }
+        ],
+        "namingRules": [
+          {
+            "name": "Format",
+            "parameters": [
+              "{0}DatabaseReaderMapper.cs"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Namespace",
+            "value": "Data.Shared.Mappers"
+          },
+          {
+            "name": "DomainNamespace",
+            "value": "Domain.Shared.Entities"
+          }
+        ]
+      }
+    ]
+  }
+}

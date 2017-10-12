@@ -1,0 +1,231 @@
+﻿{
+  /********************************************************************
+  * Input configuration: Setup the input method
+  ********************************************************************/
+  "input": {
+    "inputType": "NetAssembly",
+    "parameters": [
+      {
+        "name": "assemblyPath",
+        "value": "path/to/my/assembly.dll"
+      },
+      {
+        "name": "entryPoint",
+        "value": "ClientController"
+      }
+    ]
+  },
+
+  /********************************************************************
+  * Output configuration: Setup the output method and files
+  ********************************************************************/
+  "output": {
+    "outputType": "Razor",
+    "parameters": [
+      {
+        "name": "nativeTypeTranslatorsPath",
+        "value": "../../templates/typescript/webapi/translations.json"
+      }
+    ],
+    "outputFiles": [
+      /* SERVICE */
+      {
+        "name": "Service Implementation",
+        "templatePath": "../../templates/typescript/webapi/service.tpl",
+        "outputPath": "path/to/my/angularjs/site/src/services/http/client/",
+        "parameters": [
+          {
+            "name": "HttpServiceBasePath",
+            "value": "../http-base.service"
+          }
+        ],
+        "typeMatchers": [
+          {
+            "name": "InheritsFrom",
+            "parameters": [
+              "Microsoft.AspNetCore.Mvc.Controller"
+            ]
+          },
+          {
+            "name": "IsAbstract",
+            "negate": "true"
+          }
+        ],
+        "namingRules": [
+          {
+            "name": "Replace",
+            "parameters": [
+              "Controller",
+              ""
+            ]
+          },
+          {
+            "name": "SeparateWords",
+            "parameters": [
+              "-"
+            ]
+          },
+          {
+            "name": "LowerCase"
+          },
+          {
+            "name": "Format",
+            "parameters": [
+              "{0}.service.ts"
+            ]
+          }
+        ]
+      },
+      /* MODEL INTERFACE */
+      {
+        "name": "Model Interface",
+        "templatePath": "../../templates/typescript/webapi/model-interface.tpl",
+        "outputPath": "path/to/my/angularjs/site/src/services/http/client/models/",
+        "parameters": [],
+        "typeMatchers": [
+          {
+            "name": "ContainsAttribute",
+            "parameters": [
+              "DataContractAttribute"
+            ]
+          },
+          {
+            "name": "IsEnum",
+            "parameters": [],
+            "Negate": "true"
+          },
+          {
+            "name": "IsAbstract",
+            "parameters": [],
+            "Negate": "true"
+          },
+          {
+            "name": "NameEndsWith",
+            "parameters": [
+              "View",
+              "Parameters",
+              "Result"
+            ]
+          }
+        ],
+        "namingRules": [
+          {
+            "name": "Replace",
+            "parameters": [
+              "View",
+              ""
+            ]
+          },
+          {
+            "name": "SeparateWords",
+            "parameters": [
+              "-"
+            ]
+          },
+          {
+            "name": "LowerCase"
+          },
+          {
+            "name": "Format",
+            "parameters": [
+              "{0}.interface.ts"
+            ]
+          }
+        ]
+      },
+      /* MODEL */
+      {
+        "name": "Model",
+        "templatePath": "../../templates/typescript/webapi/model.tpl",
+        "outputPath": "path/to/my/angularjs/site/src/services/http/client/models/",
+        "parameters": [],
+        "typeMatchers": [
+          {
+            "name": "ContainsAttribute",
+            "parameters": [
+              "DataContractAttribute"
+            ]
+          },
+          {
+            "name": "IsEnum",
+            "parameters": [],
+            "Negate": "true"
+          },
+          {
+            "name": "IsAbstract",
+            "parameters": [],
+            "Negate": "true"
+          },
+          {
+            "name": "NameEndsWith",
+            "parameters": [
+              "View",
+              "Parameters",
+              "Result"
+            ]
+          }
+        ],
+        "namingRules": [
+          {
+            "name": "Replace",
+            "parameters": [
+              "View",
+              ""
+            ]
+          },
+          {
+            "name": "SeparateWords",
+            "parameters": [
+              "-"
+            ]
+          },
+          {
+            "name": "LowerCase"
+          },
+          {
+            "name": "Format",
+            "parameters": [
+              "{0}.model.ts"
+            ]
+          }
+        ]
+      },
+      /* ENUM */
+      {
+        "name": "Enum",
+        "templatePath": "../../templates/typescript/webapi/enum.tpl",
+        "outputPath": "path/to/my/angularjs/site/src/services/http/client/models/",
+        "parameters": [],
+        "typeMatchers": [
+          {
+            "name": "IsEnum",
+            "parameters": []
+          },
+          {
+            "name": "ContainsAttribute",
+            "parameters": [
+              "DataContractAttribute"
+            ]
+          }
+        ],
+        "namingRules": [
+          {
+            "name": "SeparateWords",
+            "parameters": [
+              "-"
+            ]
+          },
+          {
+            "name": "LowerCase"
+          },
+          {
+            "name": "Format",
+            "parameters": [
+              "{0}.enum.ts"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
