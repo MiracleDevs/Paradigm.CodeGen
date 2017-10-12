@@ -1,10 +1,9 @@
 using System;
-using System.IO;
+using System.Threading.Tasks;
 using Paradigm.CodeGen.Logging;
 using Paradigm.CodeGen.Output.Templating;
-using Paradigm.Core.Extensions;
 using RazorLight;
-using RazorLight.Extensions;
+using RazorLight.Razor;
 
 namespace Paradigm.CodeGen.Output.Razor
 {
@@ -12,38 +11,42 @@ namespace Paradigm.CodeGen.Output.Razor
     {
         private IRazorLightEngine TemplateEngine { get; }
 
+        private RazorLightProject Project { get; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TemplateService"/> class.
+        /// </summary>
         public TemplateService()
         {
-            var location = typeof(TemplateService).GetAssembly().Location;
-            var path = Path.GetDirectoryName(location);
-            this.TemplateEngine = EngineFactory.CreatePhysical(path);
+            this.Project = new TemplateCacheRazorLightProject();
+            this.TemplateEngine = new EngineFactory().Create(this.Project);
         }
 
-        public string Execute<T>(ITemplate template, T model, ILoggingService loggingService)
+        public async Task<string> ExecuteAsync<T>(ITemplate template, T model, ILoggingService loggingService)
         {
             try
             {
-                return this.TemplateEngine.ParseString(template.Body, model, typeof(T));
+                return await this.TemplateEngine.CompileRenderAsync(template.FileName, model).ConfigureAwait(false);
             }
-            catch(TemplateParsingException ex)
+            catch (TemplateCompilationException ex)
             {
-                this.ProcessException(loggingService, ex);
+                ProcessException(loggingService, ex);
 
-                foreach (var parseError in ex.ParserErrors)
+                foreach (var parseError in ex.CompilationErrors)
                 {
-                    loggingService.Error($"     - {parseError.Message}");
+                    loggingService.Error($"     - {parseError}");
                 }
 
                 return null;
             }
             catch (Exception ex)
             {
-                this.ProcessException(loggingService, ex);
+                ProcessException(loggingService, ex);
                 return null;
-            }          
+            }
         }
 
-        private void ProcessException(ILoggingService loggingService, Exception ex)
+        private static void ProcessException(ILoggingService loggingService, Exception ex)
         {
             do
             {
@@ -52,5 +55,9 @@ namespace Paradigm.CodeGen.Output.Razor
 
             } while (ex != null);
         }
+    }
+
+    public class TemplateParsingException : Exception
+    {
     }
 }

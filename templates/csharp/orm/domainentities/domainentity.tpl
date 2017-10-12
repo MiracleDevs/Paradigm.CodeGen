@@ -3,12 +3,12 @@
 	var name = Raw(Model.Definition.Name);
 	var interfaceName = $"I{name.ToString().Replace("View", "")}";
 	var tableName = $"I{name}Table";
-	var properties = (Model.Definition as MiracleDevs.CodeGenerator.Input.Models.Definitions.StructDefinition).Properties;
+	var properties = (Model.Definition as Paradigm.CodeGen.Input.Models.Definitions.StructDefinition).Properties;
 	var navigationProperties = properties.Where(x => x.Attributes.Any(a => a.Name == "NavigationAttribute")).ToList();
 }//////////////////////////////////////////////////////////////////////////////////
 //  @(name + ".cs")
 //
-//  Generated with the MiracleDevs.CodeGenerator tool.
+//  Generated with the Paradigm.CodeGen tool.
 //  Do not modify this file in any way.
 //
 //  Copyright (c) 2016 miracledevs. All rights reserved.
@@ -18,10 +18,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
-using MiracleDevs.ORM.Data.Attributes;
-using MiracleDevs.Framework.Mapping.Interfaces;
-using MiracleDevs.Framework.Mapping;
-using MiracleDevs.Framework.Domain;
+using Paradigm.ORM.Data.Attributes;
+using Paradigm.Core.Mapping.Interfaces;
+using Paradigm.Core.Mapping;
+using Paradigm.Services.Domain;
 using @Model.Configuration["InterfacesNamespace"];
 using @Model.Configuration["TablesNamespace"];
 

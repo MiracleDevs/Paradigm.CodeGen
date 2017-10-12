@@ -2,8 +2,8 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
-using MiracleDevs.CodeGenerator.Input.Models.Definitions;
-using MiracleDevs.CodeGenerator.Output.Razor;
+using Paradigm.CodeGen.Input.Models.Definitions;
+using Paradigm.CodeGen.Output.Razor;
 
 public static class Functions
 {

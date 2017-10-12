@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using System.Reflection;
 using Paradigm.CodeGen.Input.NetAssembly.Collections.Interfaces;
 using Paradigm.CodeGen.Tests.Fixtures;
 using Paradigm.CodeGen.Tests.Mocks;

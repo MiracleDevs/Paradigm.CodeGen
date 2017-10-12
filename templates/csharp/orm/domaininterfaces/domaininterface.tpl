@@ -2,11 +2,11 @@
 @{
 	var name = Raw(Model.Definition.Name);
 	var interfaceName = $"I{name}";
-	var properties = (Model.Definition as MiracleDevs.CodeGenerator.Input.Models.Definitions.StructDefinition).Properties;
+	var properties = (Model.Definition as Paradigm.CodeGen.Input.Models.Definitions.StructDefinition).Properties;
 }//////////////////////////////////////////////////////////////////////////////////
 //  @(name + ".cs")
 //
-//  Generated with the MiracleDevs.CodeGenerator tool.
+//  Generated with the Paradigm.CodeGen tool.
 //  Do not modify this file in any way.
 //
 //  Copyright (c) 2016 miracledevs. All rights reserved.
@@ -14,8 +14,8 @@
 
 using System;
 using System.Collections.Generic;
-using MiracleDevs.Framework.Interfaces;
-using MiracleDevs.Framework.Interfaces.Attributes;
+using Paradigm.Services.Interfaces;
+using Paradigm.Services.Interfaces.Attributes;
 
 namespace @Model.Configuration["Namespace"]
 {

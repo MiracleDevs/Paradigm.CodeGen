@@ -1,7 +1,8 @@
 {
   "profiles": {
     "Paradigm.CodeGen.UI.Console": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "-f  d:/Repositories/gitlab/endata-autoflot/services/build/configuration/codegen/shared.json"
     }
   }
 }

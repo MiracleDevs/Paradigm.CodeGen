@@ -2,9 +2,9 @@
 using System.Linq;
 using System.IO;
 using System;
-using MiracleDevs.CodeGenerator.Input.Models.Definitions;
-using MiracleDevs.CodeGenerator.Output.Razor;
-using MiracleDevs.CodeGenerator.Output.Models.Configuration;
+using Paradigm.CodeGen.Input.Models.Definitions;
+using Paradigm.CodeGen.Output.Razor;
+using Paradigm.CodeGen.Output.Models.Configuration;
 
 public static class Functions
 {

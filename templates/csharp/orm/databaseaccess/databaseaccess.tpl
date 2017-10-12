@@ -2,13 +2,13 @@
 @{
 	var name = Raw($"{Model.Definition.Name}DatabaseAccess");
 	var entityName = @Raw(Model.Definition.Name);
-	var properties = (Model.Definition as MiracleDevs.CodeGenerator.Input.Models.Definitions.StructDefinition).Properties;
+	var properties = (Model.Definition as Paradigm.CodeGen.Input.Models.Definitions.StructDefinition).Properties;
 	var navigationProperties = properties.Where(x => x.Attributes.Any(a => a.Name == "NavigationAttribute")).ToList();
 
 }//////////////////////////////////////////////////////////////////////////////////
 //  @(name + ".cs")
 //
-//  Generated with the MiracleDevs.CodeGenerator tool.
+//  Generated with the Paradigm.CodeGen tool.
 //  Do not modify this file in any way.
 //
 //  Copyright (c) 2016 miracledevs. All rights reserved.
@@ -16,7 +16,7 @@
 
 using System;
 using System.Linq;
-using MiracleDevs.ORM.Data.DatabaseAccess.Generic;
+using Paradigm.ORM.Data.DatabaseAccess.Generic;
 using @Model.Configuration["DomainNamespace"];
 
 namespace @Model.Configuration["Namespace"]

@@ -7,13 +7,13 @@
 }//////////////////////////////////////////////////////////////////////////////////
 //  @(name + ".cs")
 //
-//  Generated with the MiracleDevs.CodeGenerator tool.
+//  Generated with the Paradigm.CodeGen tool.
 //  Do not modify this file in any way.
 //
 //  Copyright (c) 2016 miracledevs. All rights reserved.
 //////////////////////////////////////////////////////////////////////////////////
 
-using MiracleDevs.ORM.Data.StoredProcedures;
+using Paradigm.ORM.Data.StoredProcedures;
 using @Model.Configuration["DomainNamespace"];
 
 namespace @Model.Configuration["Namespace"]

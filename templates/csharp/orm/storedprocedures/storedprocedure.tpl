@@ -1,15 +1,15 @@
 ﻿@include "../shared.cs"
-@{	
+@{
 	var entityName = Raw(Model.Definition.Name);
-	var name = $"{entityName}StoredProcedure";	
-	var interfaceName = $"I{entityName}StoredProcedure";	
+	var name = $"{entityName}StoredProcedure";
+	var interfaceName = $"I{entityName}StoredProcedure";
 	var parameters = $"{entityName}Parameters";
-	var routine = Model.Definition.Attributes.FirstOrDefault(x => x.Name == "RoutineAttribute");
+	var routine = (Model.Definition as Paradigm.CodeGen.Input.Models.Definitions.StructDefinition).Attributes.FirstOrDefault(x => x.Name == "RoutineAttribute");
 
 }//////////////////////////////////////////////////////////////////////////////////
 //  @(name + ".cs")
 //
-//  Generated with the MiracleDevs.CodeGenerator tool.
+//  Generated with the Paradigm.CodeGen tool.
 //  Do not modify this file in any way.
 //
 //  Copyright (c) 2016 miracledevs. All rights reserved.
@@ -17,7 +17,7 @@
 
 using System;
 using System.Runtime.Serialization;
-using MiracleDevs.ORM.Data.StoredProcedures;
+using Paradigm.ORM.Data.StoredProcedures;
 using @Model.Configuration["DomainNamespace"];
 using @Model.Configuration["MapperNamespace"];
 

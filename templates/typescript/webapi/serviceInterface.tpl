@@ -5,7 +5,7 @@
 }//////////////////////////////////////////////////////////////////////////////////
 //  @(Name + ".ts")
 //
-//  Generated with the MiracleDevs.CodeGenerator tool.
+//  Generated with the Paradigm.CodeGen tool.
 //  Do not modify this file in any way.
 //
 //  Copyright (c) 2016 miracledevs. All rights reserved.
@@ -30,7 +30,7 @@ module @Model.Configuration["Namespace"]
 
 	export interface @Name
 	{
-	@foreach(var method in (Model.Definition as MiracleDevs.CodeGenerator.Input.Models.Definitions.StructDefinition).Methods)
+	@foreach(var method in (Model.Definition as Paradigm.CodeGen.Input.Models.Definitions.StructDefinition).Methods)
 	{	
 <text>
 		@Raw(MethodFirm(Model, method, true))

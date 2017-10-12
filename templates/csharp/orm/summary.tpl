@@ -1,17 +1,18 @@
 ﻿@{
 
-	var entities = Model.GenerationItems.Where(x => x.Configuration.Name == "DomainEntity").Select(x => x.Model.Definition).ToList();
+	var model = Model as Paradigm.CodeGen.Output.Razor.SummaryModel;
+	var entities = model.GenerationItems.Where(x => x.Configuration.Name == "DomainEntity").Select(x => x.Model.Definition).ToList();
 
-	var mappers = Model.GenerationItems.Where(x => x.Configuration.Name == "DatabaseReaderMapper").Select(x => x.Model.Definition).ToList();
-	var storedProcedures = Model.GenerationItems.Where(x => x.Configuration.Name == "StoredProcedure").Select(x => x.Model.Definition).ToList();
-	var databaseAccessors = Model.GenerationItems.Where(x => x.Configuration.Name == "DatabaseAccess").Select(x => x.Model.Definition).ToList();
-	var readRepositories = Model.GenerationItems.Where(x => x.Configuration.Name == "ReadRepository").Select(x => x.Model.Definition).ToList();
-	var editRepositories = Model.GenerationItems.Where(x => x.Configuration.Name == "EditRepository").Select(x => x.Model.Definition).ToList();
+	var mappers = model.GenerationItems.Where(x => x.Configuration.Name == "DatabaseReaderMapper").Select(x => x.Model.Definition).ToList();
+	var storedProcedures = model.GenerationItems.Where(x => x.Configuration.Name == "StoredProcedure").Select(x => x.Model.Definition).ToList();
+	var databaseAccessors = model.GenerationItems.Where(x => x.Configuration.Name == "DatabaseAccess").Select(x => x.Model.Definition).ToList();
+	var readRepositories = model.GenerationItems.Where(x => x.Configuration.Name == "ReadRepository").Select(x => x.Model.Definition).ToList();
+	var editRepositories = model.GenerationItems.Where(x => x.Configuration.Name == "EditRepository").Select(x => x.Model.Definition).ToList();
 
 }//////////////////////////////////////////////////////////////////////////////////
 //  OutputSummary.txt
 //
-//  Generated with the MiracleDevs.CodeGenerator tool.
+//  Generated with the Paradigm.CodeGen tool.
 //  Do not modify this file in any way.
 //
 //  Copyright (c) 2016 miracledevs. All rights reserved.

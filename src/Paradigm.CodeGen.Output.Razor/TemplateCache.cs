@@ -34,20 +34,30 @@ namespace Paradigm.CodeGen.Output.Razor
 
         public bool IsRegistered(string fileName)
         {
-            return this.Templates.ContainsKey(fileName);
+            return this.Templates.ContainsKey(this.GetFullFileName(fileName));
         }
 
         public void Register(string fileName, ITemplate template)
         {
+            fileName = this.GetFullFileName(fileName);
             this.Templates.Add(fileName, template);
+            template.Open(fileName);
+
         }
 
         public ITemplate Get(string fileName)
         {
+            fileName = this.GetFullFileName(fileName);
+
             if (!IsRegistered(fileName))
-                throw new Exception($"Template '{Path.GetFileName(fileName)}' is not registed.");
+                throw new Exception($"Template '{this.GetFullFileName(fileName)}' is not registed.");
 
             return this.Templates[fileName];
+        }
+
+        private string GetFullFileName(string fileName)
+        {
+            return Path.IsPathRooted(fileName) ? fileName : Path.GetFullPath(fileName);
         }
 
         #endregion

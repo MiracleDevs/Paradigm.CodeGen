@@ -2,19 +2,19 @@
 @{	
 	var entityName = @Raw(Model.Definition.Name);
 	var name = Raw($"I{entityName}Repository");
-	var properties = (Model.Definition as MiracleDevs.CodeGenerator.Input.Models.Definitions.StructDefinition).Properties;
+	var properties = (Model.Definition as Paradigm.CodeGen.Input.Models.Definitions.StructDefinition).Properties;
 	var navigationProperties = properties.Where(x => x.Attributes.Any(a => a.Name == "NavigationAttribute"));
 
 }//////////////////////////////////////////////////////////////////////////////////
 //  @(name + ".cs")
 //
-//  Generated with the MiracleDevs.CodeGenerator tool.
+//  Generated with the Paradigm.CodeGen tool.
 //  Do not modify this file in any way.
 //
 //  Copyright (c) 2016 miracledevs. All rights reserved.
 //////////////////////////////////////////////////////////////////////////////////
 
-using MiracleDevs.Framework.Repositories;
+using Paradigm.Services.Repositories;
 using @Model.Configuration["DomainNamespace"];
 
 namespace @Model.Configuration["Namespace"]

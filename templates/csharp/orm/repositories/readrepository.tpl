@@ -8,7 +8,7 @@
 }//////////////////////////////////////////////////////////////////////////////////
 //  @(name + ".cs")
 //
-//  Generated with the MiracleDevs.CodeGenerator tool.
+//  Generated with the Paradigm.CodeGen tool.
 //  Do not modify this file in any way.
 //
 //  Copyright (c) 2016 miracledevs. All rights reserved.
@@ -16,8 +16,8 @@
 
 using System;
 using Microsoft.Extensions.DependencyInjection;
-using MiracleDevs.Framework.Repositories.ORM;
-using MiracleDevs.Framework.Repositories.UOW;
+using Paradigm.Services.Repositories.ORM;
+using Paradigm.Services.Repositories.UOW;
 using @Model.Configuration["DatabaseAccessNamespace"];
 using @Model.Configuration["DomainEntitiesNamespace"];
 using @Model.Configuration["DomainRepositoriesNamespace"];

@@ -5,13 +5,13 @@
 	var interfaceName = $"I{name}";
 	var databaseAccess = $"I{entityName}DatabaseAccess";
 	
-	var properties = (Model.Definition as MiracleDevs.CodeGenerator.Input.Models.Definitions.StructDefinition).Properties;
+	var properties = (Model.Definition as Paradigm.CodeGen.Input.Models.Definitions.StructDefinition).Properties;
 	var navigationProperties = properties.Where(x => x.Attributes.Any(a => a.Name == "NavigationAttribute")).ToList();
 
 }//////////////////////////////////////////////////////////////////////////////////
 //  @(name + ".cs")
 //
-//  Generated with the MiracleDevs.CodeGenerator tool.
+//  Generated with the Paradigm.CodeGen tool.
 //  Do not modify this file in any way.
 //
 //  Copyright (c) 2016 miracledevs. All rights reserved.
@@ -21,8 +21,8 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
-using MiracleDevs.Framework.Repositories.ORM;
-using MiracleDevs.Framework.Repositories.UOW;
+using Paradigm.Services.Repositories.ORM;
+using Paradigm.Services.Repositories.UOW;
 using @Model.Configuration["DatabaseAccessNamespace"];
 using @Model.Configuration["DomainEntitiesNamespace"];
 using @Model.Configuration["DomainRepositoriesNamespace"];

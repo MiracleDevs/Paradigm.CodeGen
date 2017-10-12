@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Paradigm.CodeGen.Input;
 using Paradigm.CodeGen.Input.Models.Definitions;
@@ -59,25 +60,25 @@ namespace Paradigm.CodeGen.Output.Razor
             this.SourcePath = Path.GetDirectoryName(fileName);
             this.LoadNativeTranslators(configuration);
             this.LoadTemplates(configuration);
-            this.ProcessOutputFiles(configuration);
+            this.ProcessOutputFilesAsync(configuration).Wait();
 
             if (configuration.Summary == null)
                 return;
 
-            this.GenerateFinalSummary(fileName, configuration);
+            this.GenerateFinalSummaryAsync(fileName, configuration).Wait();
         }
 
         #endregion
 
         #region Private Methods
 
-        private void ProcessOutputFiles(OutputConfiguration configuration)
+        private async Task ProcessOutputFilesAsync(OutputConfiguration configuration)
         {
             foreach (var outputConfiguration in configuration.OutputFiles)
             {
                 try
                 {
-                    this.ProcessCodeGeneration(outputConfiguration);
+                    await this.ProcessCodeGenerationAsync(outputConfiguration);
                 }
                 catch (Exception e)
                 {
@@ -86,7 +87,7 @@ namespace Paradigm.CodeGen.Output.Razor
             }
         }
 
-        private void ProcessCodeGeneration(OutputFileConfiguration configuration)
+        private async Task ProcessCodeGenerationAsync(OutputFileConfiguration configuration)
         {
             this.LoggingService.Write($" - Starting output configuration file [{configuration.Name}]: ");
             var template = TemplateCache.Instance.Get(configuration.TemplatePath);
@@ -96,7 +97,7 @@ namespace Paradigm.CodeGen.Output.Razor
             {
                 try
                 {
-                    generationItems.Add(this.GenerateFile(configuration, objectDefiniton, template));
+                    generationItems.Add(await this.GenerateFileAsync(configuration, objectDefiniton, template));
                 }
                 catch (Exception e)
                 {
@@ -107,17 +108,17 @@ namespace Paradigm.CodeGen.Output.Razor
             this.LoggingService.WriteLine($"{generationItems.Count} files generated.");
 
             if (configuration.Summary != null)
-                this.GenerateOutputFileSummary(configuration, generationItems);
+                await this.GenerateOutputFileSummaryAsync(configuration, generationItems);
 
             this.GenerationItems.AddRange(generationItems);
         }
 
-        private void GenerateOutputFileSummary(OutputFileConfiguration configuration, List<GenerationItem> generationItems)
+        private async Task GenerateOutputFileSummaryAsync(OutputFileConfiguration configuration, List<GenerationItem> generationItems)
         {
             try
             {
                 this.LoggingService.Write($" - Generating Summary for [{configuration.Name}]: ");
-                this.GenerateSummaryFile(configuration.Summary, generationItems);
+                await this.GenerateSummaryFileAsync(configuration.Summary, generationItems);
                 this.LoggingService.WriteLine("Summary Generated.");
             }
             catch (Exception ex)
@@ -126,12 +127,12 @@ namespace Paradigm.CodeGen.Output.Razor
             }
         }
 
-        private void GenerateFinalSummary(string fileName, OutputConfiguration configuration)
+        private async Task GenerateFinalSummaryAsync(string fileName, OutputConfiguration configuration)
         {
             try
             {
                 this.LoggingService.Write($" - Generating Summary for [{Path.GetFileName(fileName)}]: ");
-                this.GenerateSummaryFile(configuration.Summary, this.GenerationItems);
+                await this.GenerateSummaryFileAsync(configuration.Summary, this.GenerationItems);
                 this.LoggingService.WriteLine("Summary Generated.");
             }
             catch (Exception ex)
@@ -140,7 +141,7 @@ namespace Paradigm.CodeGen.Output.Razor
             }
         }
 
-        private GenerationItem GenerateFile(OutputFileConfiguration configuration, ObjectDefinitionBase definition, ITemplate template)
+        private async Task<GenerationItem> GenerateFileAsync(OutputFileConfiguration configuration, ObjectDefinitionBase definition, ITemplate template)
         {
             var outputFilename = ResolveOutputName(configuration, definition);
             var outputDirectory = Path.GetFullPath($"{this.SourcePath}/{configuration.OutputPath}");
@@ -149,11 +150,11 @@ namespace Paradigm.CodeGen.Output.Razor
             if (!Directory.Exists(outputDirectory))
                 Directory.CreateDirectory(outputDirectory);
 
-            File.WriteAllText(generationItem.OutputFileName, this.TemplateService.Execute(template, generationItem.Model, this.LoggingService));
+            File.WriteAllText(generationItem.OutputFileName, await this.TemplateService.ExecuteAsync(template, generationItem.Model, this.LoggingService));
             return generationItem;
         }
 
-        private void GenerateSummaryFile(SummaryFileConfiguration configuration, List<GenerationItem> generationItems)
+        private async Task GenerateSummaryFileAsync(SummaryFileConfiguration configuration, List<GenerationItem> generationItems)
         {
             var template = TemplateCache.Instance.Get(configuration.TemplatePath);
             var outputFile = Path.GetFullPath($"{this.SourcePath}/{configuration.OutputFileName}");
@@ -163,7 +164,7 @@ namespace Paradigm.CodeGen.Output.Razor
             if (!Directory.Exists(outputDirectory))
                 Directory.CreateDirectory(outputDirectory);
 
-            File.WriteAllText(outputFile, this.TemplateService.Execute(template, summaryModel, this.LoggingService));
+            File.WriteAllText(outputFile, await this.TemplateService.ExecuteAsync(template, summaryModel, this.LoggingService));
         }
 
         private static string ResolveOutputName(OutputFileConfiguration outputConfiguration, ObjectDefinitionBase definition)
@@ -192,17 +193,19 @@ namespace Paradigm.CodeGen.Output.Razor
 
             foreach (var outputConfiguration in configuration.OutputFiles)
             {
-                var fileName = outputConfiguration.TemplatePath;
-                this.AddTemplate(fileName);
+                outputConfiguration.TemplatePath = this.GetFullPath(outputConfiguration.TemplatePath);
+                this.AddTemplate(outputConfiguration.TemplatePath);
 
                 if (outputConfiguration.Summary != null)
                 {
+                    outputConfiguration.Summary.TemplatePath=this.GetFullPath(outputConfiguration.Summary.TemplatePath);
                     this.AddTemplate(outputConfiguration.Summary.TemplatePath);
                 }
             }
 
             if (configuration.Summary != null)
             {
+                configuration.Summary.TemplatePath = this.GetFullPath(configuration.Summary.TemplatePath);
                 this.AddTemplate(configuration.Summary.TemplatePath);
             }
         }
@@ -214,9 +217,13 @@ namespace Paradigm.CodeGen.Output.Razor
 
             this.LoggingService.WriteLine($" - Template [{Path.GetFileName(fileName)}]");
             var template = this.ServiceProvider.GetService<ITemplate>();
-            template.Open(Path.GetFullPath($"{this.SourcePath}/{fileName}"));
 
             TemplateCache.Instance.Register(fileName, template);
+        }
+
+        private string GetFullPath(string fileName)
+        {
+            return Path.IsPathRooted(fileName) ? fileName : Path.GetFullPath($"{this.SourcePath}/{fileName}");
         }
 
         #endregion

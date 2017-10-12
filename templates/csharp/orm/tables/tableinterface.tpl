@@ -2,12 +2,12 @@
 @{	
 	var entityName = Raw(Model.Definition.Name);
 	var name = $"I{entityName}Table";	
-	var properties = (Model.Definition as MiracleDevs.CodeGenerator.Input.Models.Definitions.StructDefinition).Properties;
+	var properties = (Model.Definition as Paradigm.CodeGen.Input.Models.Definitions.StructDefinition).Properties;
 
 }//////////////////////////////////////////////////////////////////////////////////
 //  @(name + ".cs")
 //
-//  Generated with the MiracleDevs.CodeGenerator tool.
+//  Generated with the Paradigm.CodeGen tool.
 //  Do not modify this file in any way.
 //
 //  Copyright (c) 2016 miracledevs. All rights reserved.
@@ -15,7 +15,7 @@
 
 using System;
 using System.Collections.Generic;
-using MiracleDevs.ORM.Data.Attributes;
+using Paradigm.ORM.Data.Attributes;
 
 namespace @Model.Configuration["Namespace"]
 {@Raw(GetAttributes(Model.Definition.Attributes, "\t"))

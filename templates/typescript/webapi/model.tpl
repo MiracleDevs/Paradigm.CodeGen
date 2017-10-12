@@ -6,7 +6,7 @@
 }//////////////////////////////////////////////////////////////////////////////////
 //  @(name + ".ts")
 //
-//  Generated with the MiracleDevs.CodeGenerator tool.
+//  Generated with the Paradigm.CodeGen tool.
 //  Do not modify this file in any way.
 //
 //  Copyright (c) 2016 miracledevs. All rights reserved.

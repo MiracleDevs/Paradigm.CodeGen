@@ -56,7 +56,7 @@ namespace Paradigm.CodeGen.UI.Console
             AssemblyLoader = new AssemblyLoader(new[] { path }, true);
             AssemblyLoadContext.Default.Resolving += (alc, an) =>
             {
-                LoggingService.WriteLine($"Requesting assembly [{an.Name}]");
+                LoggingService.WriteLine($"\nRequesting assembly [{an.Name}]");
                 return AssemblyLoader.ResolveAssembly(an, alc, AssemblyLoader.OptionalDirectories, AssemblyLoader.NugetLookUp);
             };
         }
@@ -148,7 +148,7 @@ namespace Paradigm.CodeGen.UI.Console
 
             foreach (var fileName in fileNames)
             {
-                var fullFileName = Path.GetFullPath($"{path}/{fileName}");
+                var fullFileName = Path.IsPathRooted(fileName) ? fileName : Path.GetFullPath($"{path}/{fileName}");
 
                 if (File.Exists(fullFileName))
                     files.Add(fullFileName);
@@ -158,7 +158,7 @@ namespace Paradigm.CodeGen.UI.Console
 
             foreach (var directory in directories)
             {
-                var fullDirectoryPath = Path.GetFullPath($"{path}/{directory}");
+                var fullDirectoryPath = Path.IsPathRooted(directory) ? directory : Path.GetFullPath($"{path}/{directory}");
                 LoggingService.WriteLine($"     Processing Directory [{fullDirectoryPath}]");
 
                 if (Directory.Exists(fullDirectoryPath))
@@ -173,7 +173,6 @@ namespace Paradigm.CodeGen.UI.Console
             LoggingService.WriteLine(string.Empty);
 
             return files;
-
         }
 
         private static List<OutputFileOverride> GetOutputFileOverrides(IEnumerable<string> configuration)
@@ -190,7 +189,7 @@ namespace Paradigm.CodeGen.UI.Console
             {
                 var overrides = outputFileOverrides.Where(x => x.OutputFileConfigurationName == outputFile.Name).ToList();
 
-                if (overrides != null && overrides.Any())
+                if (overrides?.Any() == true)
                 {
                     outputFile.TypeMatchers = new List<TypeMatcherConfiguration>(new[] { new TypeMatcherConfiguration { Name = "NameIn", Parameters = overrides.Select(x => x.TypeName).ToArray() } });
                     LoggingService.WriteLine($"- Output File Configuration [{outputFile.Name}] has been overriden for types [{string.Join(", ", overrides.Select(x => x.TypeName))}].");

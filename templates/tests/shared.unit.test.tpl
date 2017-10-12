@@ -1,11 +1,11 @@
 ﻿
 @{
-	var structDefinition = Model.Definition as MiracleDevs.CodeGenerator.Input.Models.Definitions.StructDefinition;
+	var structDefinition = Model.Definition as Paradigm.CodeGen.Input.Models.Definitions.StructDefinition;
 	var name = Raw($"{Model.Definition.Name}Tests");
 }//////////////////////////////////////////////////////////////////////////////////
 //  @(name + ".cs")
 //
-//  Generated with the MiracleDevs.CodeGenerator tool.
+//  Generated with the Paradigm.CodeGen tool.
 //
 //  Copyright (c) 2016 miracledevs. All rights reserved.
 //////////////////////////////////////////////////////////////////////////////////
