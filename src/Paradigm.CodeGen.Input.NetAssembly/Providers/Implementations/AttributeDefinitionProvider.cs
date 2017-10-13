@@ -27,7 +27,7 @@ namespace Paradigm.CodeGen.Input.NetAssembly.Providers.Implementations
             {
                 var typeInfo = type.GetTypeInfo();
 
-                foreach (var property in typeInfo.DeclaredProperties.Where(x => (x.GetMethod?.IsPublic ?? false) && (x.SetMethod?.IsPublic ?? false)))
+                foreach (var property in typeInfo.DeclaredProperties.Where(x => (x.GetMethod?.IsPublic ?? false)))
                 {
                     var tuple = new Tuple<PropertyInfo, object>(property, parameter);
                     definition.AddParameter(attributeParameterProvider.Process(attributeParameterProvider.GetFromSource(tuple), objectDefinitions, tuple));

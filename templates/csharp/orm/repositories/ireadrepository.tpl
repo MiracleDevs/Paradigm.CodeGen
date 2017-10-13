@@ -1,7 +1,7 @@
 ﻿@include "../shared.cs"
-@{	
-	var entityName = @Raw(Model.Definition.Name);
-	var name = Raw($"I{entityName}Repository");
+@{
+	var entityName = Model.Definition.Name;
+	var name = $"I{entityName}Repository";
 
 }//////////////////////////////////////////////////////////////////////////////////
 //  @(name + ".cs")
@@ -17,7 +17,7 @@ using @Model.Configuration["DomainNamespace"];
 
 namespace @Model.Configuration["Namespace"]
 {
-	public partial interface @name : IReadRepository<@entityName, @Raw(GetPrimaryKeyForRepositories(Model))>
-	{	
+	public partial interface @Raw(name) : IReadRepository<@Raw(entityName), @Raw(GetPrimaryKeyForRepositories(Model))>
+	{
 	}
 }

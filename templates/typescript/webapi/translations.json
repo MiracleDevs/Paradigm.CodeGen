@@ -9,7 +9,7 @@
 { "Name": "System.Byte",                        "Translation": "number" },
 { "Name": "System.UInt16",                      "Translation": "number" },
 { "Name": "System.UInt32",                      "Translation": "number" },
-{ "Name": "System.UInt64",                      "Translation": "number" },                             
+{ "Name": "System.UInt64",                      "Translation": "number" },
 { "Name": "System.Char",                        "Translation": "string" },
 { "Name": "System.String",                      "Translation": "string" },
 { "Name": "System.Byte[]",                      "Translation": "string" },
@@ -26,11 +26,11 @@
 { "Name": "System.Nullable<Byte>",              "Translation": "number" },
 { "Name": "System.Nullable<UInt16>",            "Translation": "number" },
 { "Name": "System.Nullable<UInt32>",            "Translation": "number" },
-{ "Name": "System.Nullable<UInt64>",            "Translation": "number" },                             
-{ "Name": "System.Nullable<Char>",              "Translation": "string" },                       
+{ "Name": "System.Nullable<UInt64>",            "Translation": "number" },
+{ "Name": "System.Nullable<Char>",              "Translation": "string" },
 { "Name": "System.Nullable<Boolean>",           "Translation": "boolean"},
 { "Name": "System.Nullable<DateTime>",          "Translation": "Date"   },
-{ "Name": "System.Type",                        "Translation": "Function" },
+{ "Name": "System.Type",                        "Translation": "Function"},
 { "Name": "System.Object",                      "Translation": "object" },
 { "Name": "System.Guid",                        "Translation": "string" }
 ]

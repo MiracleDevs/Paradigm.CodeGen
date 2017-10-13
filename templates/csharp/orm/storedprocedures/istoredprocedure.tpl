@@ -1,7 +1,7 @@
 ﻿@include "../shared.cs"
-@{	
-	var entityName = Raw(Model.Definition.Name);
-	var name = $"I{entityName}StoredProcedure";	
+@{
+	var entityName = Model.Definition.Name;
+	var name = $"I{entityName}StoredProcedure";
 	var parameters = $"{entityName}Parameters";
 
 }//////////////////////////////////////////////////////////////////////////////////
@@ -18,7 +18,7 @@ using @Model.Configuration["DomainNamespace"];
 
 namespace @Model.Configuration["Namespace"]
 {
-	public interface @name : @Raw(GetStoredProcedureInterface(Model))
+	public interface @Raw(name) : @Raw(GetStoredProcedureInterface(Model))
     {
     }
 }

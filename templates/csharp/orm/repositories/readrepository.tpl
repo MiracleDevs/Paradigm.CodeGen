@@ -1,7 +1,7 @@
 ﻿@include "../shared.cs"
 @{
-	var entityName = @Raw(Model.Definition.Name);
-	var name = Raw($"{entityName}Repository");
+	var entityName = Model.Definition.Name;
+	var name = $"{entityName}Repository";
 	var interfaceName = $"I{name}";
 	var databaseAccess = $"I{entityName}DatabaseAccess";
 
@@ -24,7 +24,7 @@ using @Model.Configuration["DomainRepositoriesNamespace"];
 
 namespace @Model.Configuration["Namespace"]
 {
-	public partial class @name : ReadRepositoryBase<@entityName, @Raw(GetPrimaryKeyForRepositories(Model)), @databaseAccess>, @interfaceName
+	public partial class @Raw(name) : ReadRepositoryBase<@Raw(entityName), @Raw(GetPrimaryKeyForRepositories(Model)), @databaseAccess>, @Raw(interfaceName)
 	{
 		#region Constructor
 
@@ -32,6 +32,6 @@ namespace @Model.Configuration["Namespace"]
 	    {
 	    }
 
-		#endregion		
+		#endregion
 	}
 }

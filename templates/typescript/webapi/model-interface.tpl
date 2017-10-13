@@ -1,10 +1,10 @@
 ﻿@include "shared.cs"
 @{
-	var name = Raw(GetModelName(Model, Model.Definition, isInterface: true));
+	var name = GetModelName(Model, Model.Definition, isInterface: true);
 	var properties = GetProperties(Model.Definition);
 	var contracts = GetModelRelatedContracts(Model, Model.Definition, properties);
 }//////////////////////////////////////////////////////////////////////////////////
-//  @(name + ".ts")
+//  @Raw(name + ".ts")
 //
 //  Generated with the Paradigm.CodeGen tool.
 //  Do not modify this file in any way.
@@ -14,19 +14,15 @@
 
 @foreach(var contract in contracts)
 {
-<text>///<reference path="@Raw(GetModelName(Model, contract, isInterface: true) + ".ts")" />
+<text>import { @Raw(GetModelName(Model, contract, isInterface: true)) } from "./@Raw(GetFileName(Model, contract, isInterface: true))";
 </text>
 }
 
-module @Model.Configuration["Namespace"]
+export interface @Raw(name)
 {
-	export interface @name
-	{
 	@foreach(var property in properties)
-	{	
-<text>
-		@ToCamelCase(property.Name): @Raw(GetModelName(Model, property.Type, isInterface: true));
+	{
+<text>	@ToCamelCase(property.Name): @Raw(GetModelName(Model, property.Type, isInterface: true));
 </text>
-	}
 	}
 }

@@ -65,7 +65,7 @@ namespace Paradigm.CodeGen.Tests.Plugins.Input.NetAssembly.Providers
             result.Should().NotBeNull();
             result.Name.Should().Be(nameof(MockBaseAttribute));
             result.Parameters.Should().NotBeNull();
-            result.Parameters.Count.Should().Be(4);
+            result.Parameters.Count.Should().Be(6);
 
             //Parameters Assertion
             result.Parameters.Select(x => x.Name).Contains("PrivateAttr").Should().BeFalse();
@@ -86,7 +86,7 @@ namespace Paradigm.CodeGen.Tests.Plugins.Input.NetAssembly.Providers
             result.Should().NotBeNull();
             result.Name.Should().Be(nameof(MockAttribute));
             result.Parameters.Should().NotBeNull();
-            result.Parameters.Count.Should().Be(5);
+            result.Parameters.Count.Should().Be(8);
 
             //Parameters Assertion
             result.Parameters.Select(x => x.Name).Contains("PrivateAttr").Should().BeFalse();

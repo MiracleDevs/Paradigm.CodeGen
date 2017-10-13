@@ -1,10 +1,10 @@
 ﻿@include "../shared.cs"
 @{
-	var entityName = @Raw(Model.Definition.Name);
-	var name = Raw($"{entityName}Repository");
+	var entityName = Model.Definition.Name;
+	var name = $"{entityName}Repository";
 	var interfaceName = $"I{name}";
 	var databaseAccess = $"I{entityName}DatabaseAccess";
-	
+
 	var properties = (Model.Definition as Paradigm.CodeGen.Input.Models.Definitions.StructDefinition).Properties;
 	var navigationProperties = properties.Where(x => x.Attributes.Any(a => a.Name == "NavigationAttribute")).ToList();
 
@@ -30,7 +30,7 @@ using FrameworkTask = System.Threading.Tasks.Task;
 
 namespace @Model.Configuration["Namespace"]
 {
-	public partial class @name : EditRepositoryBase<@entityName, @Raw(GetPrimaryKeyForRepositories(Model)), @databaseAccess>, @interfaceName
+	public partial class @Raw(name) : EditRepositoryBase<@Raw(entityName), @Raw(GetPrimaryKeyForRepositories(Model)), @databaseAccess>, @Raw(interfaceName)
 	{
 		#region Constructor
 
@@ -38,7 +38,7 @@ namespace @Model.Configuration["Namespace"]
 	    {
 	    }
 
-		#endregion		
+		#endregion
 
 		#region Protected Methods
 
@@ -47,7 +47,7 @@ namespace @Model.Configuration["Namespace"]
 			this.BeforeEdit(entity);
 			@Raw(GetSingleEditRemoval(Model, navigationProperties, "\t\t\t"))
             base.Edit(entity);
-			
+
 			this.AfterEdit(entity);
 	    }
 
@@ -66,7 +66,7 @@ namespace @Model.Configuration["Namespace"]
 			this.BeforeEdit(entity);
 			@Raw(GetSingleEditRemoval(Model, navigationProperties, "\t\t\t", "await ", "Async"))
             await base.EditAsync(entity);
-			
+
 			this.AfterEdit(entity);
 	    }
 

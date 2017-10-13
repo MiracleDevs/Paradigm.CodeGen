@@ -1,12 +1,12 @@
 ﻿@include "../shared.cs"
 @{
-	var name = Raw($"{Model.Definition.Name}DatabaseAccess");
-	var entityName = @Raw(Model.Definition.Name);
+	var name = $"{Model.Definition.Name}DatabaseAccess";
+	var entityName = Model.Definition.Name;
 	var properties = (Model.Definition as Paradigm.CodeGen.Input.Models.Definitions.StructDefinition).Properties;
 	var navigationProperties = properties.Where(x => x.Attributes.Any(a => a.Name == "NavigationAttribute")).ToList();
 
 }//////////////////////////////////////////////////////////////////////////////////
-//  @(name + ".cs")
+//  @(Raw(name) + ".cs")
 //
 //  Generated with the Paradigm.CodeGen tool.
 //  Do not modify this file in any way.
@@ -21,7 +21,7 @@ using @Model.Configuration["DomainNamespace"];
 
 namespace @Model.Configuration["Namespace"]
 {
-	public partial class @name : DatabaseAccess<@entityName>, @("I" + name)
+	public partial class @Raw(name) : DatabaseAccess<@Raw(entityName)>, @("I" + name)
 	{
 		@if (navigationProperties.Any())
 		{
@@ -29,15 +29,15 @@ namespace @Model.Configuration["Namespace"]
 </text>
 			foreach(var property in navigationProperties)
 			{
-				var typeName = Raw((property.Type.IsArray ? property.Type.InnerObject.Name : property.Type.Name) + "DatabaseAccess");
+				var typeName = (property.Type.IsArray ? property.Type.InnerObject.Name : property.Type.Name) + "DatabaseAccess";
 				var interfaceTypeName = "I" + typeName;
 
 <text>
-		public @interfaceTypeName @typeName { get; private set; }
+		public @Raw(interfaceTypeName) @Raw(typeName) { get; private set; }
 </text>
 			}
 
-<text>		
+<text>
 		#endregion
 
 </text>
@@ -48,31 +48,31 @@ namespace @Model.Configuration["Namespace"]
 		{
 		}
 
-		#endregion		
+		#endregion
 		@if (navigationProperties.Any())
 		{
-<text>		
+<text>
 		#region Protected Methods
 
 		protected override void AfterInitialize()
 		{
-			base.AfterInitialize();		
+			base.AfterInitialize();
 </text>
 			foreach(var property in navigationProperties)
 			{
 				var className = Model.Definition.Name;
-				var typeName = Raw((property.Type.IsArray ? property.Type.InnerObject.Name : property.Type.Name) + "DatabaseAccess");
+				var typeName = (property.Type.IsArray ? property.Type.InnerObject.Name : property.Type.Name) + "DatabaseAccess";
 				var interfaceTypeName = $"I{typeName}";
-				var propertyName = Raw($"{className}.{property.Name}");				
+				var propertyName = $"{className}.{property.Name}";
 <text>
-			this.@typeName = this.NavigationDatabaseAccesses.FirstOrDefault(x => x.NavigationPropertyDescriptor.PropertyName == nameof(@propertyName))?.DatabaseAccess as @interfaceTypeName;
+			this.@Raw(typeName) = this.NavigationDatabaseAccesses.FirstOrDefault(x => x.NavigationPropertyDescriptor.PropertyName == nameof(@Raw(propertyName)))?.DatabaseAccess as @Raw(interfaceTypeName);
 
-            if (this.@typeName == null)
-                throw new Exception("@name couldn't retrieve a reference to @typeName.");
+            if (this.@Raw(typeName) == null)
+                throw new Exception("@Raw(name) couldn't retrieve a reference to @typeName.");
 </text>
 			}
 
-<text>		
+<text>
 		}
 
 		#endregion

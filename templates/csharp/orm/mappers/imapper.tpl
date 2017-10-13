@@ -1,7 +1,7 @@
 ﻿@include "../shared.cs"
 @{
-	var name = Raw($"I{Model.Definition.Name}DatabaseReaderMapper");
-	var entityName = @Raw(Model.Definition.Name);
+	var name = $"I{Model.Definition.Name}DatabaseReaderMapper";
+	var entityName = Model.Definition.Name;
 }//////////////////////////////////////////////////////////////////////////////////
 //  @(name + ".cs")
 //
@@ -17,7 +17,7 @@ using @Model.Configuration["DomainNamespace"];
 
 namespace @Model.Configuration["Namespace"]
 {
-	public interface @name : IDatabaseReaderMapper<@entityName>
+	public interface @Raw(name) : IDatabaseReaderMapper<@Raw(entityName)>
     {
     }
 }

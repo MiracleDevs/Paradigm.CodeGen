@@ -24,5 +24,5 @@ execute "bash ./build.solution.sh $index.1 nocls"
 #------------------------------------------------
 # PUBLISH CODEGEN
 #------------------------------------------------
-execute "bash ./publish.tool.sh codegen ../src/Paradigm.CodeGen.UI.Console/Paradigm.CodeGen.UI.Console.csproj $index.1 nocls"
+execute "bash ./publish.tool.sh codegen ../src/Paradigm.CodeGen.UI.Console/Paradigm.CodeGen.UI.Console.csproj $index.2 nocls"
 

@@ -5,6 +5,7 @@ using System;
 using Paradigm.CodeGen.Input.Models.Definitions;
 using Paradigm.CodeGen.Output.Razor;
 using Paradigm.CodeGen.Output.Models.Configuration;
+using Paradigm.CodeGen.Output.NamingRules;
 
 public static class Functions
 {
@@ -15,14 +16,14 @@ public static class Functions
             var structDefinition = objectDefinition as StructDefinition;
             return structDefinition.GenericArguments.FirstOrDefault() ?? model.Definitions.FirstOrDefault(x => x.FullName == "System.Void");
         }
-	
+
         return objectDefinition;
 	}
-	
+
 	public static string GetModelName(GenerationItemModel model, ObjectDefinitionBase objectDefinition, bool isInterface)
-	{      
+	{
         objectDefinition = GetDefinition(objectDefinition, model);
-			
+
 		if (objectDefinition is EnumDefinition)
 		    isInterface = false;
 
@@ -33,10 +34,47 @@ public static class Functions
 	        if (objectDefinition.IsArray && objectDefinition.InnerObject != null)
 		        return string.Format("{0}[]", GetModelName(model, objectDefinition.InnerObject, isInterface: isInterface));
 
-			    return string.Format("{0}{1}", isInterface && !objectDefinition.IsInterface ?  "I" : "", objectDefinition.Name.Replace("View", ""));
+			return string.Format("{0}{1}", isInterface && !objectDefinition.IsInterface ?  "I" : "", objectDefinition.Name.Replace("View", ""));
 		}
 
         return translator.Translation;
+	}
+
+	public static string GetFileName(GenerationItemModel model, ObjectDefinitionBase objectDefinition, bool isInterface)
+	{
+		var namingRule = new SeparateWordsNamingRule();
+        var name = GetModelName(model, objectDefinition, isInterface: false);
+
+		if (name.ToLower().StartsWith("i"))
+			name = name.Substring(1, name.Length - 1);
+
+		var newName = namingRule.Execute(name, new NamingRuleConfiguration() { Parameters = new []{"-"}}).ToLowerInvariant();
+
+
+		if(isInterface && objectDefinition is StructDefinition)
+			return newName + ".interface";
+
+		if(isInterface && objectDefinition is EnumDefinition)
+			return newName + ".enum";
+
+		return newName;
+	}
+
+	public static string GetServiceFileName(GenerationItemModel model, ObjectDefinitionBase objectDefinition, bool isInterface)
+	{
+		var namingRule = new SeparateWordsNamingRule();
+        var name = GetServiceName(objectDefinition, isInterface: false);
+		name = name.Replace("Service", "");
+
+		if (name.ToLower().StartsWith("i"))
+			name = name.Substring(1, name.Length - 1);
+
+		var newName = namingRule.Execute(name, new NamingRuleConfiguration() { Parameters = new []{"-"}}).ToLowerInvariant() + ".service";
+
+		if(isInterface && objectDefinition is StructDefinition)
+			return newName + ".interface";
+
+		return newName;
 	}
 
 	public static string GetServiceName(ObjectDefinitionBase objectDefinition, bool isInterface)
@@ -54,25 +92,13 @@ public static class Functions
 
 		return char.ToLower(value[0]) + value.Substring(1, value.Length - 1);
 	}
-	
-	public static string GetRelativeModelDirectoryForServices(GenerationItemModel model, OutputFileConfiguration configuration, ObjectDefinitionBase objectDefinition, bool isInterface)
-    {   
-		var fakeFile = "file.txt";
-		var fakeFileUri = "/file.txt";
-
-        var serviceRoute = new Uri(System.IO.Path.GetFullPath($"{configuration.OutputPath}/{fakeFile}"), UriKind.Absolute);
-        var modelRoute   = new Uri(System.IO.Path.GetFullPath($"{configuration["ModelOutputPath"]}/{fakeFile}"), UriKind.Absolute);
-        var relativePath = Uri.UnescapeDataString(serviceRoute.MakeRelativeUri(modelRoute).ToString()).Replace(fakeFileUri, string.Empty);		
-		
-		return relativePath + "/" + GetModelName(model, objectDefinition, isInterface) + ".ts";           
-    }
 
     public static List<PropertyDefinition> GetProperties(ObjectDefinitionBase definition)
     {
         return (definition as StructDefinition).Properties.Where(x => x.Attributes.Any(a => a.Name == "DataMemberAttribute")).ToList();
     }
 
-    public static IEnumerable<ObjectDefinitionBase> GetServiceRelatedContracts(GenerationItemModel model, ObjectDefinitionBase definition) 
+    public static IEnumerable<ObjectDefinitionBase> GetServiceRelatedContracts(GenerationItemModel model, ObjectDefinitionBase definition)
 	{
 		var contracts = new Dictionary<string, ObjectDefinitionBase>();
 		var classDefinition = definition as StructDefinition;
@@ -89,7 +115,7 @@ public static class Functions
 
 		    var translator = model.GetTranslator(objectDefinition);
 
-            if (!contracts.ContainsKey(objectDefinition.Name) && 
+            if (!contracts.ContainsKey(objectDefinition.Name) &&
 				 translator == null)
 			{
 				contracts.Add(objectDefinition.Name, objectDefinition);
@@ -104,18 +130,18 @@ public static class Functions
 
 			    translator = model.GetTranslator(objectDefinition);
 
-                if (!contracts.ContainsKey(objectDefinition.Name) && 
+                if (!contracts.ContainsKey(objectDefinition.Name) &&
 					 translator == null)
 				{
 					contracts.Add(objectDefinition.Name, objectDefinition);
-				}			
+				}
 			}
 		}
 
-		return contracts.Values;
+		return contracts.Values.ToList();
 	}
 
-	public static IEnumerable<ObjectDefinitionBase> GetModelRelatedContracts(GenerationItemModel model, ObjectDefinitionBase definition, List<PropertyDefinition> properties) 
+	public static IEnumerable<ObjectDefinitionBase> GetModelRelatedContracts(GenerationItemModel model, ObjectDefinitionBase definition, List<PropertyDefinition> properties)
 	{
 		var contracts = new Dictionary<string, ObjectDefinitionBase>();
 
@@ -129,14 +155,14 @@ public static class Functions
 		    var translator = model.GetTranslator(objectDefinition);
 
             if (objectDefinition.Name != definition.Name &&
-				!contracts.ContainsKey(objectDefinition.Name) && 
+				!contracts.ContainsKey(objectDefinition.Name) &&
 				translator == null)
 			{
 				contracts.Add(objectDefinition.Name, objectDefinition);
 			}
 		}
 
-		return contracts.Values;
+		return contracts.Values.ToList();
 	}
 
 	public static string MethodFirm(GenerationItemModel model, MethodDefinition method, bool includeSemicolon)
@@ -152,7 +178,7 @@ public static class Functions
 		{
 			parameters = parameters.Substring(0, parameters.Length - 2);
 		}
-	
+
 		return string.Format("{0}({1}): IHttpPromise<{2}>{3}", ToCamelCase(method.Name), parameters, GetModelName(model, method.ReturnType, isInterface: true), includeSemicolon ? ";" : "");
 	}
 
@@ -167,8 +193,14 @@ public static class Functions
 		if (method.Attributes.Any(x => x.Name == "HttpPutAttribute"))
 			return "put";
 
+		if (method.Attributes.Any(x => x.Name == "HttpPatchAttribute"))
+			return "patch";
+
 		if (method.Attributes.Any(x => x.Name == "HttpDeleteAttribute"))
 			return "delete";
+
+		if (method.Attributes.Any(x => x.Name == "HttpOptionsAttribute"))
+			return "options";
 
 		if (method.Name.ToLower() == "get")
 			return "get";
@@ -179,10 +211,29 @@ public static class Functions
 		if (method.Name.ToLower() == "put")
 			return "put";
 
+		if (method.Name.ToLower() == "patch")
+			return "patch";
+
 		if (method.Name.ToLower() == "delete")
 			return "delete";
 
+		if (method.Name.ToLower() == "options")
+			return "options";
+
 		return "get";
+	}
+
+	public static bool VerbAllowsBodyData(string verb)
+	{
+		switch(verb)
+		{
+			case "get":
+			case "delete":
+			case "options":
+				return false;
+			default:
+				return true;
+		}
 	}
 
     public static string GetControllerTemplate(GenerationItemModel model)
@@ -210,18 +261,21 @@ public static class Functions
 	    var controllerRoute = GetControllerTemplate(model);
 	    var methodRoute = GetMethodTemplate(method);
 	    var route = string.IsNullOrWhiteSpace(methodRoute) ? controllerRoute : $"{controllerRoute}/{methodRoute}";
-	        
+
 		foreach(var parameter in method.Parameters)
-		{			
+		{
 			if (parameter.Attributes.Any(x => x.Name == "FromBodyAttribute"))
 				data = string.Format("{0}", parameter.Name);
 			else
 				callParameters += string.Format("{0}: {0}, ", parameter.Name);
 		}
 
-		if (callParameters.Any()) 
-			callParameters = string.Format("{{ {0} }}", callParameters.Substring(0, callParameters.Length - 2)); 
+		if (!string.IsNullOrWhiteSpace(data) && !VerbAllowsBodyData(verb))
+			throw new Exception($"The action '{method.Name}' in controller '{serviceName}' does not allow body data due to its verb '{verb}' does not allows message body data.");
 
-		return $"return this.{verb}<{GetModelName(model, method.ReturnType, isInterface: true)}>('{route}', {(callParameters.Any() ? callParameters : "null")}, {(data.Any() ? data : "null")});";
+		if (callParameters.Any())
+			callParameters = string.Format("{{ {0} }}", callParameters.Substring(0, callParameters.Length - 2));
+
+		return $"return this.{verb}<{GetModelName(model, method.ReturnType, isInterface: true)}>(\"{route}\", {(callParameters.Any() ? callParameters : "null")}{(data.Any() ? ", " + data : "")});";
     }
 }

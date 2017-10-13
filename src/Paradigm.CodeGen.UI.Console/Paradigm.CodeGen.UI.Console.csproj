@@ -39,4 +39,8 @@
     <ProjectReference Include="..\Paradigm.CodeGen.Output\Paradigm.CodeGen.Output.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
 </Project>

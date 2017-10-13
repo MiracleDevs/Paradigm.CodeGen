@@ -1,6 +1,6 @@
 ﻿@include "../shared.cs"
 @{
-	var entityName = Raw(Model.Definition.Name);
+	var entityName = Model.Definition.Name;
 	var name = $"{entityName}StoredProcedure";
 	var interfaceName = $"I{entityName}StoredProcedure";
 	var parameters = $"{entityName}Parameters";
@@ -24,7 +24,7 @@ using @Model.Configuration["MapperNamespace"];
 namespace @Model.Configuration["Namespace"]
 {
 	[DataContract]
-	public class @name : @Raw(GetStoredProcedureBaseClass(Model)), @interfaceName
+	public class @Raw(name) : @Raw(GetStoredProcedureBaseClass(Model)), @Raw(interfaceName)
     {
 		#region Constructor
 

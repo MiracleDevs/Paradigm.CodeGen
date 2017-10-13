@@ -1,6 +1,6 @@
 ﻿@include "../shared.cs"
 @{
-	var name = Raw(Model.Definition.Name);
+	var name = Model.Definition.Name;
 	var interfaceName = $"I{name}";
 	var properties = (Model.Definition as Paradigm.CodeGen.Input.Models.Definitions.StructDefinition).Properties;
 }//////////////////////////////////////////////////////////////////////////////////
@@ -16,10 +16,11 @@ using System;
 using System.Collections.Generic;
 using Paradigm.Services.Interfaces;
 using Paradigm.Services.Interfaces.Attributes;
+using @Raw(Model.Configuration["ValidationResourceTypeNamespace"]);
 
 namespace @Model.Configuration["Namespace"]
 {
-	public interface @interfaceName: IDomainInterface
+	public interface @Raw(interfaceName): IDomainInterface
     {
         #region Properties
 		@foreach(var property in properties)

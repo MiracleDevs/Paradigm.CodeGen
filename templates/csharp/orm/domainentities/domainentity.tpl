@@ -1,6 +1,6 @@
 ﻿@include "../shared.cs"
 @{
-	var name = Raw(Model.Definition.Name);
+	var name = Model.Definition.Name;
 	var interfaceName = $"I{name.ToString().Replace("View", "")}";
 	var tableName = $"I{name}Table";
 	var properties = (Model.Definition as Paradigm.CodeGen.Input.Models.Definitions.StructDefinition).Properties;
@@ -29,7 +29,7 @@ namespace @Model.Configuration["Namespace"]
 {
 	[DataContract]
 	[TableType(typeof(@tableName))]
-	public partial class @name : @Raw(GetInheritance(Model))
+	public partial class @Raw(name) : @Raw(GetInheritance(Model))
     {
 @if (navigationProperties.Any())
 {
@@ -52,31 +52,31 @@ namespace @Model.Configuration["Namespace"]
 <text>
 		#region Public Methods
 
-		public static  @name FromInterface(@interfaceName model)
+		public static  @Raw(name) FromInterface(@Raw(interfaceName) model)
     	{
     		return new @(name)().MapFrom(model);
     	}
     
 		public static void RegisterMapping(IMapper mapper)
     	{
-    		if (mapper.MapExists(typeof(@interfaceName), typeof(@name)))
+    		if (mapper.MapExists(typeof(@Raw(interfaceName)), typeof(@Raw(name))))
     			return;
     
-    		var configuration = mapper.Register<@interfaceName, @name>();
+    		var configuration = mapper.Register<@Raw(interfaceName), @Raw(name)>();
 			@Raw(GetIgnorePropertyList(Model, navigationProperties, "\t\t\t"))   		
 			AfterRegisterMapping(configuration);
     	}
 
-		public override @name MapFrom(@interfaceName model)
+		public override @Raw(name) MapFrom(@Raw(interfaceName) model)
     	{
 			return this.MapFrom(Mapper.Container, model);
 		}
     
-    	public @name MapFrom(IMapper mapper, @interfaceName model)
+    	public @Raw(name) MapFrom(IMapper mapper, @Raw(interfaceName) model)
     	{
     		this.BeforeMap(model);
     		
-			mapper.Map<@interfaceName, @name>(model, this); 
+			mapper.Map<@Raw(interfaceName), @Raw(name)>(model, this); 
 			@Raw(GetMapPropertyList(Model, navigationProperties, "\t\t\t"))     	
 			this.AfterMap(model);
 			
@@ -112,11 +112,11 @@ namespace @Model.Configuration["Namespace"]
 @if (ImplementsDomainInterface(Model))
 {
 <text>		
-		static partial void AfterRegisterMapping(IMemberConfiguration<@interfaceName, @name> configuration);
+		static partial void AfterRegisterMapping(IMemberConfiguration<@Raw(interfaceName), @Raw(name)> configuration);
 
-    	partial void BeforeMap(@interfaceName model);
+    	partial void BeforeMap(@Raw(interfaceName) model);
     
-    	partial void AfterMap(@interfaceName model);
+    	partial void AfterMap(@Raw(interfaceName) model);
 </text>
 }  
 		

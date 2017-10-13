@@ -1,7 +1,7 @@
 ﻿@include "../shared.cs"
-@{	
-	var entityName = @Raw(Model.Definition.Name);
-	var name = Raw($"I{entityName}Repository");
+@{
+	var entityName = Model.Definition.Name;
+	var name = $"I{entityName}Repository";
 	var properties = (Model.Definition as Paradigm.CodeGen.Input.Models.Definitions.StructDefinition).Properties;
 	var navigationProperties = properties.Where(x => x.Attributes.Any(a => a.Name == "NavigationAttribute"));
 
@@ -19,7 +19,7 @@ using @Model.Configuration["DomainNamespace"];
 
 namespace @Model.Configuration["Namespace"]
 {
-	public partial interface @name : IEditRepository<@entityName, @Raw(GetPrimaryKeyForRepositories(Model))>
-	{	
+	public partial interface @Raw(name) : IEditRepository<@Raw(entityName), @Raw(GetPrimaryKeyForRepositories(Model))>
+	{
 	}
 }

@@ -1,6 +1,6 @@
 ﻿@include "../shared.cs"
 @{
-	var entityName = Raw(Model.Definition.Name);
+	var entityName = Model.Definition.Name;
 	var name = $"{entityName}Parameters";
 	var properties = (Model.Definition as Paradigm.CodeGen.Input.Models.Definitions.StructDefinition).Properties;
 
@@ -20,7 +20,7 @@ using Paradigm.ORM.Data.Attributes;
 namespace @Model.Configuration["Namespace"]
 {
 	[DataContract]@Raw(GetAttributes(Model.Definition.Attributes, "\t"))
-	public class @name
+	public class @Raw(name)
     {
         #region Properties
 		@foreach(var property in properties)

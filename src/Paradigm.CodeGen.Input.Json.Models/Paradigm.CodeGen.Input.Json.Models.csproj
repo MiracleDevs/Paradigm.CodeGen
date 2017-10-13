@@ -15,7 +15,7 @@ If you want to provide json to feed the tool, please use the models in this libr
     <RepositoryUrl>https://github.com/MiracleDevs/Paradigm.CodeGen.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIconUrl>https://avatars2.githubusercontent.com/u/8192926</PackageIconUrl>
-    <Version>2.0.1</Version>
+    <Version>2.0.2</Version>
     <ApplicationIcon></ApplicationIcon>
   </PropertyGroup>
 

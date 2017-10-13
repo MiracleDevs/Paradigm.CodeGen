@@ -1,8 +1,8 @@
 ﻿@include "../shared.cs"
 @{
-	var name = Raw($"{Model.Definition.Name}DatabaseReaderMapper");
-	var interfaceName = Raw($"I{Model.Definition.Name}DatabaseReaderMapper");
-	var entityName = @Raw(Model.Definition.Name);
+	var name = $"{Model.Definition.Name}DatabaseReaderMapper";
+	var interfaceName = $"I{Model.Definition.Name}DatabaseReaderMapper";
+	var entityName = Model.Definition.Name;
 }//////////////////////////////////////////////////////////////////////////////////
 //  @(name + ".cs")
 //
@@ -19,21 +19,21 @@ using @Model.Configuration["DomainNamespace"];
 
 namespace @Model.Configuration["Namespace"]
 {
-	public class @name : DatabaseReaderMapper<@entityName>, @interfaceName
+	public class @Raw(name) : DatabaseReaderMapper<@Raw(entityName)>, @Raw(interfaceName)
     {
 		#region Protected Methods
 
 		protected override object MapRow(IDatabaseReader reader)
 		{
 			var entity = new @(entityName)();
-			@Raw(MapProperties(Model, "entity", "reader", false, true))			
+			@Raw(MapProperties(Model, "entity", "reader", false, true))
 			return entity;
 		}
 
 		protected override async System.Threading.Tasks.Task<object> MapRowAsync(IDatabaseReader reader)
 		{
 			var entity = new @(entityName)();
-			@Raw(MapProperties(Model, "entity", "reader", true, true))			
+			@Raw(MapProperties(Model, "entity", "reader", true, true))
 			return entity;
 		}
 
