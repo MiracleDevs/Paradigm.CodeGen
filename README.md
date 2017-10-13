@@ -38,6 +38,9 @@ If you are planning to use codegen in several projects, we recommend to add the 
 
 Change log
 ---
+Version `2.0.2`
+- Updated Razor Light to an alpha version supporting .NET Core 2.0 and 2.0 standard libraries.
+- Updated templates.
 
 Version `2.0.1`
 - Updated Paradigm.Core to version `2.0.1`.
