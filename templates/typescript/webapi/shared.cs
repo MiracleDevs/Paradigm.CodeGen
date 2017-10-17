@@ -45,7 +45,7 @@ public static class Functions
 		var namingRule = new SeparateWordsNamingRule();
         var name = GetModelName(model, objectDefinition, isInterface: false);
 
-		if (name.ToLower().StartsWith("i"))
+		if (objectDefinition.IsInterface)
 			name = name.Substring(1, name.Length - 1);
 
 		var newName = namingRule.Execute(name, new NamingRuleConfiguration() { Parameters = new []{"-"}}).ToLowerInvariant();
@@ -66,7 +66,7 @@ public static class Functions
         var name = GetServiceName(objectDefinition, isInterface: false);
 		name = name.Replace("Service", "");
 
-		if (name.ToLower().StartsWith("i"))
+		if (objectDefinition.IsInterface)
 			name = name.Substring(1, name.Length - 1);
 
 		var newName = namingRule.Execute(name, new NamingRuleConfiguration() { Parameters = new []{"-"}}).ToLowerInvariant() + ".service";
