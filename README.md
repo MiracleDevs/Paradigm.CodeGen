@@ -7,41 +7,6 @@ Currenly is being used by the [Paradigm.ORM](https://github.com/MiracleDevs/Para
 to generate dbfirst classes, and to generate typescript services and model for the Paradigm.AngularJS
 and Paradigm.Angular wrappers.
 
-Nuget Packages
----
-
-| Library | Nuget | Install
-|-|-|-|
-| Paradigm.CodeGen.Input.Json.Models | [![NuGet](https://img.shields.io/nuget/v/Nuget.Core.svg)](https://www.nuget.org/packages/Paradigm.CodeGen.Input.Json.Models/) | `Install-Package Paradigm.CodeGen.Input.Json.Models` |
-
-
-
-Self Contained Deploy (SCD)
----
-
-Bellow you can find portable versions for all major OSs.
-If you are planning to use codegen in several projects, we recommend to add the SCD folder to your PATH.
-
-| OS | Zip File |
-|-|-|
-| Windows x86 | [Download](https://raw.githubusercontent.com/MiracleDevs/Paradigm.CodeGen/master/dist/codegen.win-x86.zip) |
-| Windows x64 | [Download](https://raw.githubusercontent.com/MiracleDevs/Paradigm.CodeGen/master/dist/codegen.win-x64.zip) |
-| Linux x64   | [Download](https://raw.githubusercontent.com/MiracleDevs/Paradigm.CodeGen/master/dist/codegen.linux-x64.zip) |
-| OSX x64     | [Download](https://raw.githubusercontent.com/MiracleDevs/Paradigm.CodeGen/master/dist/codegen.osx-x64.zip) |
-
-
-Command Line Arguments
-
-| Short Version | Large Version | Default Value | Description |
-|-|-|-|-|
-| `-f`       | `--filename <filename>`              |       | Indicates the path of one or more output configuration files.
-| `-d`       | `--directory <directory>`            |       | Indicates the path of one or more directories containing the output configuration files.
-| `-t`       | `--topdirectory`                     | false | If directories were provided, indicates if the system should check only on the top directory.
-| `-e`       | `--extension <extension>`            | json  | Indicates the extension of configuration files when searching inside directories.
-| `-o`       | `--override <outputFile>:<typeName>` |       | Allows to override the configuration file and choose an Output File Configuration for a given Type Name. Please consider that any other configuration won't be executed if you override the configuration file.
-| `-?`  `-h` | `--help`                             |       | Show help information
-
-
 
 How it works
 ---
@@ -85,6 +50,42 @@ The most time demanding task when using codegen, is to create the configuration 
 As the diagram above shows, there are two main configuration section, the input configuration, and the output configuration. In both, the user must provide the plugin configuration.
 The output is really where the complexity resides. The output configuration is made of a list of output files, and each output file, describe which template to use, how objects will be matched (Type Matchers), how the file will be named (Naming rules) and defines custom parameters that codegen will provide to the output service to be used as custom user information.
 You can see a couple of configuration examples [here](examples/configuration/typescript.webapi.json) and [here](examples/configuration/csharp.orm.json)
+
+
+Nuget Packages
+---
+
+| Library | Nuget | Install
+|-|-|-|
+| Paradigm.CodeGen.Input.Json.Models | [![NuGet](https://img.shields.io/nuget/v/Nuget.Core.svg)](https://www.nuget.org/packages/Paradigm.CodeGen.Input.Json.Models/) | `Install-Package Paradigm.CodeGen.Input.Json.Models` |
+
+
+Self Contained Deploy (SCD)
+---
+
+Bellow you can find portable versions for all major OSs.
+If you are planning to use codegen in several projects, we recommend to add the SCD folder to your PATH.
+
+| OS | Zip File |
+|-|-|
+| Windows x86 | [Download](https://raw.githubusercontent.com/MiracleDevs/Paradigm.CodeGen/master/dist/codegen.win-x86.zip) |
+| Windows x64 | [Download](https://raw.githubusercontent.com/MiracleDevs/Paradigm.CodeGen/master/dist/codegen.win-x64.zip) |
+| Linux x64   | [Download](https://raw.githubusercontent.com/MiracleDevs/Paradigm.CodeGen/master/dist/codegen.linux-x64.zip) |
+| OSX x64     | [Download](https://raw.githubusercontent.com/MiracleDevs/Paradigm.CodeGen/master/dist/codegen.osx-x64.zip) |
+
+
+Command Line Arguments
+
+| Short Version | Large Version | Default Value | Description |
+|-|-|-|-|
+| `-f`       | `--filename <filename>`              |       | Indicates the path of one or more output configuration files.
+| `-d`       | `--directory <directory>`            |       | Indicates the path of one or more directories containing the output configuration files.
+| `-t`       | `--topdirectory`                     | false | If directories were provided, indicates if the system should check only on the top directory.
+| `-e`       | `--extension <extension>`            | json  | Indicates the extension of configuration files when searching inside directories.
+| `-o`       | `--override <outputFile>:<typeName>` |       | Allows to override the configuration file and choose an Output File Configuration for a given Type Name. Please consider that any other configuration won't be executed if you override the configuration file.
+| `-?`  `-h` | `--help`                             |       | Show help information
+
+
 
 Change log
 ---
