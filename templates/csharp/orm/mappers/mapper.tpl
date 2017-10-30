@@ -21,6 +21,14 @@ namespace @Model.Configuration["Namespace"]
 {
 	public class @Raw(name) : DatabaseReaderMapper<@Raw(entityName)>, @Raw(interfaceName)
     {
+		#region Constructor
+		
+		public @Raw(name)(IDatabaseConnector connector) : base(connector)
+        {
+        }
+		
+		#endregion
+		
 		#region Protected Methods
 
 		protected override object MapRow(IDatabaseReader reader)

@@ -1,6 +1,6 @@
 ﻿@include "shared.cs"
 @{
-	var name = Model.Definition.name;
+	var name = Model.Definition.Name;
 }//////////////////////////////////////////////////////////////////////////////////
 //  @(name + ".ts")
 //
@@ -14,7 +14,7 @@ export enum @Raw(name)
 {
 	@foreach(var value in (Model.Definition as Paradigm.CodeGen.Input.Models.Definitions.EnumDefinition).Values)
 	{
-<text>	@Raw(value.name) = @Raw(value.Value),
+<text>	@Raw(value.Name) = @Raw(value.Value),
 </text>
 	}
 }
