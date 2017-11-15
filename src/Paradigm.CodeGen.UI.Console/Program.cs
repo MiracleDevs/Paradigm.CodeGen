@@ -68,14 +68,15 @@ namespace Paradigm.CodeGen.UI.Console
                 var commandLineApplication = new CommandLineApplication(false);
                 var fileNames = commandLineApplication.Option("-f | --filename <filename>", "Indicates the path of one or more output configuration files.", CommandOptionType.MultipleValue);
                 var directories = commandLineApplication.Option("-d | --directory <directory>", "Indicates one or more directory path in which all the output configuration files will be used to generate code.", CommandOptionType.MultipleValue);
-                var topDirectoryOnly = commandLineApplication.Option("-t | --topdirectory", "If directories were provided, indicates if the system should check only on the top directory.", CommandOptionType.NoValue);
+                var topDirectoryOnly = commandLineApplication.Option("-t | --top-directory", "If directories were provided, indicates if the system should check only on the top directory.", CommandOptionType.NoValue);
                 var extension = commandLineApplication.Option("-e | --extension <extension>", "Indicates the extension of configuration files when searching inside directories.", CommandOptionType.SingleValue);
+                var maxParallelism = commandLineApplication.Option("-mp | --max-parallelism <amount-of-cores>", "Indicates the number of parallel tasks allowed.", CommandOptionType.SingleValue);
                 var output = commandLineApplication.Option("-o | --override <outputFile>:<typeName>", "Allows to override the configuration file and choose an Output File Configuration for a given Type Name. Take in account that any other configuration won't be executed if you override the configuration files.", CommandOptionType.MultipleValue);
 
                 commandLineApplication.HelpOption("-? | -h | --help");
                 commandLineApplication.OnExecute(() =>
                 {
-                    GetConfigurationFiles(fileNames.Values, directories.Values, topDirectoryOnly.HasValue(), extension.Value()).ToList().ForEach(x => ProcessConfigurationFile(x, GetOutputFileOverrides(output.Values)));
+                    GetConfigurationFiles(fileNames.Values, directories.Values, topDirectoryOnly.HasValue(), extension.Value()).ToList().ForEach(x => ProcessConfigurationFile(x, GetOutputFileOverrides(output.Values), int.Parse(maxParallelism.Value() ?? "4")));
                     return 0;
                 });
 
@@ -87,7 +88,7 @@ namespace Paradigm.CodeGen.UI.Console
             }
         }
 
-        private static void ProcessConfigurationFile(string configurationFileName, List<OutputFileOverride> outputFileOverrides)
+        private static void ProcessConfigurationFile(string configurationFileName, List<OutputFileOverride> outputFileOverrides, int maxParallelism)
         {
             LoggingService.Notice($"Starting to read configuration file [{Path.GetFileName(configurationFileName)}]");
 
@@ -101,8 +102,9 @@ namespace Paradigm.CodeGen.UI.Console
             // and adds all the typed names to the output file configuration for this run.
             OverrideConfigurationFiles(outputFileOverrides, configuration);
 
-            LoggingService.WriteLine($"Input  Type:\t{configuration.Input.InputType}");
-            LoggingService.WriteLine($"Output Type:\t{configuration.Output.OutputType}");
+            LoggingService.WriteLine($"Max Parallelism: {maxParallelism}");
+            LoggingService.WriteLine($"Input  Type:     {configuration.Input.InputType}");
+            LoggingService.WriteLine($"Output Type:     {configuration.Output.OutputType}");
 
             // inject dependencies and start input and ouput plugins.
             var builder = DependencyBuilderFactory.Create(DependencyLibrary.Microsoft);
@@ -121,7 +123,7 @@ namespace Paradigm.CodeGen.UI.Console
 
             // run input and output logic.
             inputService.Process(configurationFileName, configuration.Input);
-            outputService.Generate(configurationFileName, configuration.Output);
+            outputService.Generate(configurationFileName, configuration.Output, maxParallelism);
         }
 
         private static CodeGeneratorConfiguration GetConfigurationFile(string configurationFileName)
@@ -131,7 +133,7 @@ namespace Paradigm.CodeGen.UI.Console
                 var configuration = JsonConvert.DeserializeObject<CodeGeneratorConfiguration>(File.ReadAllText(configurationFileName));
                 return configuration;
             }
-            catch 
+            catch
             {
                 LoggingService.Error($"The configuration file couldn't be opened [{configurationFileName}]");
                 return null;
@@ -143,7 +145,7 @@ namespace Paradigm.CodeGen.UI.Console
             var path = Directory.GetCurrentDirectory();
             var files = new List<string>();
 
-            LoggingService.Notice($"Discovering Files");
+            LoggingService.Notice("Discovering Files");
             LoggingService.WriteLine($"    Directory:       [{path}]");
 
             foreach (var fileName in fileNames)
@@ -189,7 +191,7 @@ namespace Paradigm.CodeGen.UI.Console
             {
                 var overrides = outputFileOverrides.Where(x => x.OutputFileConfigurationName == outputFile.Name).ToList();
 
-                if (overrides?.Any() == true)
+                if (overrides.Any())
                 {
                     outputFile.TypeMatchers = new List<TypeMatcherConfiguration>(new[] { new TypeMatcherConfiguration { Name = "NameIn", Parameters = overrides.Select(x => x.TypeName).ToArray() } });
                     LoggingService.WriteLine($"- Output File Configuration [{outputFile.Name}] has been overriden for types [{string.Join(", ", overrides.Select(x => x.TypeName))}].");

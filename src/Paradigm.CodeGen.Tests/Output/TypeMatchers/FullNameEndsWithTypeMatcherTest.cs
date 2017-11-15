@@ -46,7 +46,7 @@ namespace Paradigm.CodeGen.Tests.Output.TypeMatchers
             var config = new TypeMatcherConfiguration { Parameters = param };
             Action match = () => this.TypeMatcher.Match(config, this.Fixture.ClassDefinition);
 
-            match.ShouldThrow<Exception>().WithMessage("FullNameEndsWith type matcher needs at least 1 parameter.");
+            match.Should().Throw<Exception>().WithMessage("FullNameEndsWith type matcher needs at least 1 parameter.");
         }
 
         [Test]
@@ -59,7 +59,7 @@ namespace Paradigm.CodeGen.Tests.Output.TypeMatchers
 
         [Test]
         public void ShouldMatchIfStringIsSuffixOfClassFullName()
-        { 
+        {
             var config = new TypeMatcherConfiguration { Parameters = new[] { this.Fixture.ClassDefinition.FullName.Substring(this.Fixture.ClassDefinition.FullName.Length / 2) } };
 
             this.TypeMatcher.Match(config, this.Fixture.ClassDefinition).Should().BeTrue("FullNameEndsWithTypeMatcher must return True if param is suffix of TestClass full name");

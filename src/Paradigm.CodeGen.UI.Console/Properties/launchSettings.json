@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Paradigm.CodeGen.UI.Console": {
+      "commandName": "Project",
+      "commandLineArgs": "-d d:\\Repositories\\gitlab\\equipcast\\services\\build\\configuration\\codegen\\"
+    }
+  }
+}

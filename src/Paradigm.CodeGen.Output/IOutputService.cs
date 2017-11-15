@@ -4,6 +4,6 @@ namespace Paradigm.CodeGen.Output
 {
     public interface IOutputService
     {
-        void Generate(string fileName,  OutputConfiguration configuration);
+        void Generate(string fileName, OutputConfiguration configuration, int maxParallelism);
     }
 }

@@ -33,7 +33,7 @@ namespace Paradigm.CodeGen.Tests.Output.NamingRules
             var conf = new NamingRuleConfiguration { Parameters = param };
             Action execute = () => this.NamingRule.Execute("Name", conf);
 
-            execute.ShouldThrow<Exception>().WithMessage("Separate Words rule has only 1 argument, the separator string.");
+            execute.Should().Throw<Exception>().WithMessage("Separate Words rule has only 1 argument, the separator string.");
         }
 
         [Test]

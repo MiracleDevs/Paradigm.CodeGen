@@ -34,7 +34,7 @@ namespace Paradigm.CodeGen.Tests.Output.NamingRules
             var conf = new NamingRuleConfiguration { Parameters = param };
             Action execute = () => this.NamingRule.Execute("Name", conf);
 
-            execute.ShouldThrow<Exception>().WithMessage("Replace rule Has only 2 arguments, the string to be replaced, and the value to replace for.");
+            execute.Should().Throw<Exception>().WithMessage("Replace rule Has only 2 arguments, the string to be replaced, and the value to replace for.");
         }
 
         [Test]

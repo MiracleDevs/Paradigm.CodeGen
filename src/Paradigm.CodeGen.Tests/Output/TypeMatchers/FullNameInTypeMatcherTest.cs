@@ -42,16 +42,16 @@ namespace Paradigm.CodeGen.Tests.Output.TypeMatchers
 
         [Test]
         public void ThrowWhenParametersAreInvalid()
-        { 
+        {
             var config = new TypeMatcherConfiguration();
             Action match = () => this.TypeMatcher.Match(config, this.Fixture.ClassDefinition);
 
-            match.ShouldThrow<Exception>().WithMessage("FullNameIn type expect an array of names.");
+            match.Should().Throw<Exception>().WithMessage("FullNameIn type expect an array of names.");
         }
 
         [Test]
         public void ShouldNotMatchIfClassFullnameIsNotInParameterList()
-        { 
+        {
             var config = new TypeMatcherConfiguration { Parameters = new[] { "FakeName1", "FakeName2" } };
 
             this.TypeMatcher.Match(config, this.Fixture.ClassDefinition).Should().BeFalse("Must return True only when objectDefinition's full name is in params");

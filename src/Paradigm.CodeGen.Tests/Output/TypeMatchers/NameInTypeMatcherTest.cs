@@ -46,7 +46,7 @@ namespace Paradigm.CodeGen.Tests.Output.TypeMatchers
             var config = new TypeMatcherConfiguration();
             Action match = () => this.TypeMatcher.Match(config, this.Fixture.ClassDefinition);
 
-            match.ShouldThrow<Exception>().WithMessage("NameIn type expect an array of names.");
+            match.Should().Throw<Exception>().WithMessage("NameIn type expect an array of names.");
         }
 
         [Test]

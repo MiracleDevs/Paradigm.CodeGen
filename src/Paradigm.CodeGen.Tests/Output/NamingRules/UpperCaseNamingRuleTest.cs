@@ -31,7 +31,7 @@ namespace Paradigm.CodeGen.Tests.Output.NamingRules
             var conf = new NamingRuleConfiguration { Parameters = new[] { "FirstParam", "SecondParam" } };
             Action execute = () => this.NamingRule.Execute("Name", conf);
 
-            execute.ShouldThrow<Exception>().WithMessage("Upper Case rule does not have parameters.");
+            execute.Should().Throw<Exception>().WithMessage("Upper Case rule does not have parameters.");
         }
 
         [Test]

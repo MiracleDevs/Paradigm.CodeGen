@@ -49,7 +49,7 @@ namespace Paradigm.CodeGen.Tests.Output.TypeMatchers
             var config = new TypeMatcherConfiguration { Parameters = param };
             Action match = () => this.TypeMatcher.Match(config, this.Fixture.ClassDefinition);
 
-            match.ShouldThrow<Exception>().WithMessage("Inherits From type matcher has only 1 argument, the string to be found.");
+            match.Should().Throw<Exception>().WithMessage("Inherits From type matcher has only 1 argument, the string to be found.");
         }
 
         [Test]

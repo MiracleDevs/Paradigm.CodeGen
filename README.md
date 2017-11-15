@@ -82,6 +82,7 @@ Command Line Arguments
 | `-d`       | `--directory <directory>`            |       | Indicates the path of one or more directories containing the output configuration files.
 | `-t`       | `--topdirectory`                     | false | If directories were provided, indicates if the system should check only on the top directory.
 | `-e`       | `--extension <extension>`            | json  | Indicates the extension of configuration files when searching inside directories.
+| `-mp`      | `--max-parallelism <amount-of-cores>`| 4     | Indicates the number of parallel tasks allowed.
 | `-o`       | `--override <outputFile>:<typeName>` |       | Allows to override the configuration file and choose an Output File Configuration for a given Type Name. Please consider that any other configuration won't be executed if you override the configuration file.
 | `-?`  `-h` | `--help`                             |       | Show help information
 
@@ -89,6 +90,11 @@ Command Line Arguments
 
 Change log
 ---
+Version `2.0.3`
+- Updated nuget dependencies.
+- Modified the output service to run the code generation in parallel.
+- Added a new parameter to indicate the maximum amount of parallel tasks.
+
 Version `2.0.2`
 - Updated Razor Light to an alpha version supporting .NET Core 2.0 and 2.0 standard libraries.
 - Updated templates.

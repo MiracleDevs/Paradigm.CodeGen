@@ -36,6 +36,8 @@ namespace Paradigm.CodeGen.Output.Razor
 
         private string SourcePath { get; set; }
 
+        private int MaxParallelism { get; set; }
+
         #endregion
 
         #region Constructor
@@ -53,14 +55,15 @@ namespace Paradigm.CodeGen.Output.Razor
 
         #region Public Methods
 
-        public void Generate(string fileName, OutputConfiguration configuration)
+        public void Generate(string fileName, OutputConfiguration configuration, int maxParallelism)
         {
             this.LoggingService.Notice("Begining Code Generation...");
 
+            this.MaxParallelism = maxParallelism;
             this.SourcePath = Path.GetDirectoryName(fileName);
             this.LoadNativeTranslators(configuration);
             this.LoadTemplates(configuration);
-            this.ProcessOutputFilesAsync(configuration).Wait();
+            this.ProcessOutputFiles(configuration);
 
             if (configuration.Summary == null)
                 return;
@@ -72,24 +75,23 @@ namespace Paradigm.CodeGen.Output.Razor
 
         #region Private Methods
 
-        private async Task ProcessOutputFilesAsync(OutputConfiguration configuration)
+        private void ProcessOutputFiles(OutputConfiguration configuration)
         {
-            foreach (var outputConfiguration in configuration.OutputFiles)
+            Parallel.ForEach(configuration.OutputFiles, new ParallelOptions { MaxDegreeOfParallelism = this.MaxParallelism }, outputConfiguration =>
             {
                 try
                 {
-                    await this.ProcessCodeGenerationAsync(outputConfiguration);
+                    this.ProcessCodeGenerationAsync(outputConfiguration).Wait();
                 }
                 catch (Exception e)
                 {
                     this.LoggingService.Error($"Problems found in output configuration file [{outputConfiguration.Name}]':{Environment.NewLine}{e.Message}");
                 }
-            }
+            });
         }
 
         private async Task ProcessCodeGenerationAsync(OutputFileConfiguration configuration)
         {
-            this.LoggingService.Write($" - Starting output configuration file [{configuration.Name}]: ");
             var template = TemplateCache.Instance.Get(configuration.TemplatePath);
             var generationItems = new List<GenerationItem>();
 
@@ -105,7 +107,7 @@ namespace Paradigm.CodeGen.Output.Razor
                 }
             }
 
-            this.LoggingService.WriteLine($"{generationItems.Count} files generated.");
+            this.LoggingService.WriteLine($" - Starting output configuration file [{configuration.Name}]: {generationItems.Count} files generated.");
 
             if (configuration.Summary != null)
                 await this.GenerateOutputFileSummaryAsync(configuration, generationItems);

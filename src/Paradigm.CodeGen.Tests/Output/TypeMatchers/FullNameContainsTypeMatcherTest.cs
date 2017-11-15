@@ -43,16 +43,16 @@ namespace Paradigm.CodeGen.Tests.Output.TypeMatchers
         [TestCase(new object[] { new[] { "Param1", "Param2" } })]
         [TestCase(new object[] { new string[] { } })]
         public void ThrowWhenParametersAreInvalid(string[] param)
-        { 
+        {
             var config = new TypeMatcherConfiguration { Parameters = param };
             Action match = () => this.TypeMatcher.Match(config, this.Fixture.ClassDefinition);
 
-            match.ShouldThrow<Exception>().WithMessage("FullNameContains type matcher has only 1 argument, the string to be found.");
+            match.Should().Throw<Exception>().WithMessage("FullNameContains type matcher has only 1 argument, the string to be found.");
         }
-        
+
         [Test]
         public void ShouldNotMatchIfStringIsContainedInsideFullName()
-        { 
+        {
             var config = new TypeMatcherConfiguration { Parameters = new[] { "Testing.Contains" } };
 
             this.TypeMatcher.Match(config, this.Fixture.ClassDefinition).Should().BeFalse("FullNameContainsTypeMatcher must return True if param is a substring of TestClass full name");
@@ -60,7 +60,7 @@ namespace Paradigm.CodeGen.Tests.Output.TypeMatchers
 
         [Test]
         public void ShouldMatchIfStringIsContainedInsideFullName()
-        { 
+        {
             var quaterLenght = this.Fixture.ClassDefinition.FullName.Length / 4;
             var halfLenght = this.Fixture.ClassDefinition.FullName.Length / 2;
             var config = new TypeMatcherConfiguration { Parameters = new[] { this.Fixture.ClassDefinition.FullName.Substring(halfLenght - quaterLenght, halfLenght + quaterLenght) } };

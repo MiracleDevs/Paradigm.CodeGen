@@ -36,7 +36,7 @@ namespace Paradigm.CodeGen.Tests.Output.TypeMatchers
             var config = new TypeMatcherConfiguration { Parameters = new[] { "Param1", "Param2" } };
             Action match = () => this.TypeMatcher.Match(config, this.ArrayDefinition);
 
-            match.ShouldThrow<Exception>().WithMessage("Is Array type matcher hasn't any arguments.");
+            match.Should().Throw<Exception>().WithMessage("Is Array type matcher hasn't any arguments.");
         }
 
         [Test]

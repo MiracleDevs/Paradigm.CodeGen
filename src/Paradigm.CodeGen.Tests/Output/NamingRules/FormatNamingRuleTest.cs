@@ -31,9 +31,8 @@ namespace Paradigm.CodeGen.Tests.Output.NamingRules
         public void ShouldFailWithInvalidParameters(string[] param)
         {
             var conf = new NamingRuleConfiguration { Parameters = param };
-            Action execute = () => this.NamingRule.Execute("Name", conf);
 
-            execute.ShouldThrow<Exception>().WithMessage("Format rule has only 1 argument, the format string.");
+            this.NamingRule.Invoking(x => x.Execute("Name", conf)).Should().Throw<Exception>().WithMessage("Format rule has only 1 argument, the format string.");
         }
 
         [Test]

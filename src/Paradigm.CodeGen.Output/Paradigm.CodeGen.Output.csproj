@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Paradigm.Core.Assemblies" Version="2.0.1" />
-    <PackageReference Include="Paradigm.Core.DependencyInjection" Version="2.0.1" />
+    <PackageReference Include="Paradigm.Core.Assemblies" Version="2.0.3" />
+    <PackageReference Include="Paradigm.Core.DependencyInjection" Version="2.0.3" />
     <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Serialization.Formatters" Version="4.3.0" />
   </ItemGroup>

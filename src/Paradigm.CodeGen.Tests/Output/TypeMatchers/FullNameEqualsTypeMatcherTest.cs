@@ -43,11 +43,11 @@ namespace Paradigm.CodeGen.Tests.Output.TypeMatchers
         [TestCase(new object[] { new[] { "Param1", "Param2" } })]
         [TestCase(new object[] { new string[] { } })]
         public void ThrowWhenParametersAreInvalid(string[] param)
-        { 
+        {
             var config = new TypeMatcherConfiguration { Parameters = param }; 
             Action match = () => this.TypeMatcher.Match(config, this.Fixture.ClassDefinition);
 
-            match.ShouldThrow<Exception>().WithMessage("FullNameEquals type matcher has only 1 argument, the string to be found.");
+            match.Should().Throw<Exception>().WithMessage("FullNameEquals type matcher has only 1 argument, the string to be found.");
         }
 
         [Test]

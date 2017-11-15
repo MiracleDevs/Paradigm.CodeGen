@@ -46,7 +46,7 @@ namespace Paradigm.CodeGen.Tests.Output.TypeMatchers
             var config = new TypeMatcherConfiguration { Parameters = param };
             Action match = () => this.TypeMatcher.Match(config, this.Fixture.ClassDefinition);
 
-            match.ShouldThrow<Exception>().WithMessage("NamespaceEndsWith type matcher needs at least 1 parameter.");
+            match.Should().Throw<Exception>().WithMessage("NamespaceEndsWith type matcher needs at least 1 parameter.");
         }
 
         [Test]
