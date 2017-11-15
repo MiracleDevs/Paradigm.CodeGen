@@ -80,7 +80,7 @@ Command Line Arguments
 |-|-|-|-|
 | `-f`       | `--filename <filename>`              |       | Indicates the path of one or more output configuration files.
 | `-d`       | `--directory <directory>`            |       | Indicates the path of one or more directories containing the output configuration files.
-| `-t`       | `--topdirectory`                     | false | If directories were provided, indicates if the system should check only on the top directory.
+| `-t`       | `--top-directory`                    | false | If directories were provided, indicates if the system should check only on the top directory.
 | `-e`       | `--extension <extension>`            | json  | Indicates the extension of configuration files when searching inside directories.
 | `-mp`      | `--max-parallelism <amount-of-cores>`| 4     | Indicates the number of parallel tasks allowed.
 | `-o`       | `--override <outputFile>:<typeName>` |       | Allows to override the configuration file and choose an Output File Configuration for a given Type Name. Please consider that any other configuration won't be executed if you override the configuration file.
