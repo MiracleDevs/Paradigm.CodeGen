@@ -17,10 +17,16 @@
 using System;
 using System.Linq;
 using Paradigm.ORM.Data.DatabaseAccess.Generic;
+using Paradigm.ORM.Data.Database;
 using @Model.Configuration["DomainNamespace"];
+using @Model.Configuration["ConnectorNamespace"];
 
 namespace @Model.Configuration["Namespace"]
 {
+    /// <summary>
+    /// Represents a database access object
+    /// that allows to create, update, delete and select @Raw(GetReadableString(Model.Definition.Name)) from the database.
+    /// </summary>
 	public partial class @Raw(name) : DatabaseAccess<@Raw(entityName)>, @("I" + name)
 	{
 		@if (navigationProperties.Any())
@@ -33,6 +39,9 @@ namespace @Model.Configuration["Namespace"]
 				var interfaceTypeName = "I" + typeName;
 
 <text>
+        /// @Raw("<summary>")
+        /// Gets or sets the @Raw(GetReadableString(typeName)).
+        /// @Raw("</summary>")
 		public @Raw(interfaceTypeName) @Raw(typeName) { get; private set; }
 </text>
 			}
@@ -44,7 +53,12 @@ namespace @Model.Configuration["Namespace"]
 		}
 		#region Constructor
 
-		public @(name)(IServiceProvider provider) : base(provider)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="@Raw(name)"/> class.
+        /// </summary>
+        /// <param name="serviceProvider">The service provider.</param>
+        /// <param name="connector">The database connector.</param>
+        public @(name)(IServiceProvider serviceProvider, @Model.Configuration["Connector"] connector) : base(serviceProvider, connector)
 		{
 		}
 
@@ -54,6 +68,9 @@ namespace @Model.Configuration["Namespace"]
 <text>
 		#region Protected Methods
 
+        /// @Raw("<summary>")
+        /// Executes right after the database access object has been initialized.
+        /// @Raw("</summary>")
 		protected override void AfterInitialize()
 		{
 			base.AfterInitialize();

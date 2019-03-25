@@ -17,6 +17,9 @@ using @Model.Configuration["DomainNamespace"];
 
 namespace @Model.Configuration["Namespace"]
 {
+    /// <summary>
+    /// Provides an interface for an object that takes a @Raw(GetReadableString(Model.Definition.Name)) from the database and maps it to a <see cref="@Raw(Model.Definition.Name)"/> class.
+    /// </summary>
 	public interface @Raw(name) : IDatabaseReaderMapper<@Raw(entityName)>
     {
     }

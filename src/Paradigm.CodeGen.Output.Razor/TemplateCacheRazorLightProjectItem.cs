@@ -8,7 +8,7 @@ namespace Paradigm.CodeGen.Output.Razor
     {
         private Stream Content { get; }
 
-        public override string Key { get; set; }
+        public override string Key { get; }
 
         public override bool Exists => true;
 

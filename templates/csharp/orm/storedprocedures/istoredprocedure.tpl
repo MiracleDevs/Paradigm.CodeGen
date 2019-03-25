@@ -18,6 +18,9 @@ using @Model.Configuration["DomainNamespace"];
 
 namespace @Model.Configuration["Namespace"]
 {
+    /// <summary>
+    /// Provides an interface for a stored procedure caller that calls to '@Raw(Model.Definition.Name)' procedure.
+    /// </summary>
 	public interface @Raw(name) : @Raw(GetStoredProcedureInterface(Model))
     {
     }

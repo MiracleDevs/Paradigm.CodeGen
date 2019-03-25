@@ -29,5 +29,10 @@ namespace Paradigm.CodeGen.Output.Razor
         {
             return this.TypeTranslators.Find(x => x.Name == definition.FullName || x.Name == definition.Name).FirstOrDefault();
         }
+
+        public override string ToString()
+        {
+            return $"Output Configuration: '{Configuration.Name}' Model: {Definition.FullName}";
+        }
     }
 }

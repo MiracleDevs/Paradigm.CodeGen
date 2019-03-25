@@ -30,11 +30,18 @@ using FrameworkTask = System.Threading.Tasks.Task;
 
 namespace @Model.Configuration["Namespace"]
 {
+    /// <summary>
+    /// Represents a @Raw(GetReadableString(Model.Definition.Name)) repository that can read and edit the entities.
+    /// </summary>
 	public partial class @Raw(name) : EditRepositoryBase<@Raw(entityName), @Raw(GetPrimaryKeyForRepositories(Model)), @databaseAccess>, @Raw(interfaceName)
 	{
 		#region Constructor
 
-		public @(name)(IServiceProvider serviceProvider) : base(serviceProvider, serviceProvider.GetService<@databaseAccess>(), serviceProvider.GetService<IUnitOfWork>())
+        /// <summary>
+        /// Initializes a new instance of the <see cref="@Raw(name)"/> class.
+        /// </summary>
+        /// <param name="serviceProvider">The service provider.</param>
+		public @(name)(IServiceProvider serviceProvider) : base(serviceProvider, serviceProvider.GetRequiredService<@databaseAccess>(), serviceProvider.GetRequiredService<IUnitOfWork>())
 	    {
 	    }
 
@@ -42,6 +49,10 @@ namespace @Model.Configuration["Namespace"]
 
 		#region Protected Methods
 
+        /// <summary>
+        /// Edits the specified entity.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
 		public override void Edit(@(entityName) entity)
 	    {
 			this.BeforeEdit(entity);
@@ -51,6 +62,10 @@ namespace @Model.Configuration["Namespace"]
 			this.AfterEdit(entity);
 	    }
 
+        /// <summary>
+        /// Edits the specified entities.
+        /// </summary>
+        /// <param name="entities">The entities.</param>
 	    public override void Edit(IEnumerable<@(entityName)> entities)
 	    {
 			var entityList = entities as IList<@(entityName)> ?? entities.ToList();
@@ -61,6 +76,10 @@ namespace @Model.Configuration["Namespace"]
 			this.AfterEdit(entityList);
 	    }
 
+        /// <summary>
+        /// Edits the specified entity.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
 		public override async FrameworkTask EditAsync(@(entityName) entity)
 	    {
 			this.BeforeEdit(entity);
@@ -70,6 +89,10 @@ namespace @Model.Configuration["Namespace"]
 			this.AfterEdit(entity);
 	    }
 
+        /// <summary>
+        /// Edits the specified entities.
+        /// </summary>
+        /// <param name="entities">The entities.</param>
 	    public override async FrameworkTask EditAsync(IEnumerable<@(entityName)> entities)
 	    {
 			var entityList = entities as IList<@(entityName)> ?? entities.ToList();
@@ -88,12 +111,28 @@ namespace @Model.Configuration["Namespace"]
 
 		#region Partial Methods
 
+        /// <summary>
+        /// Executes right before the entity is added.
+        /// </summary>
+        /// <param name="entity">Entity to be edited.</param>
 		partial void BeforeEdit(@(entityName) entity);
 
+	    /// <summary>
+	    /// Executes right before the entities are added.
+	    /// </summary>
+	    /// <param name="entities">Entities to be edited.</param>
 		partial void BeforeEdit(IEnumerable<@(entityName)> entities);
 
+        /// <summary>
+        /// Executes right after the entity was added.
+        /// </summary>
+        /// <param name="entity">Entity to be edited.</param>
 		partial void AfterEdit(@(entityName) entity);
 
+	    /// <summary>
+	    /// Executes right before the entities were added.
+	    /// </summary>
+	    /// <param name="entities">Entities to be edited.</param>
 		partial void AfterEdit(IEnumerable<@(entityName)> entities);
 
 		#endregion

@@ -1,12 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System.Text.RegularExpressions;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using Paradigm.CodeGen.Input.Models.Definitions;
 using Paradigm.CodeGen.Output.Razor;
 
 public static class Functions
 {
+    public static string GetReadableString(string value)
+    {
+        return string.IsNullOrWhiteSpace(value) ? "" : Regex.Replace(value, "(\\B[A-Z])", " $1").ToLower();
+    }
+
     public static string GetModelName(GenerationItemModel model, ObjectDefinitionBase objectDefinition, bool isInterface = false)
     {
         if (objectDefinition is EnumDefinition)
@@ -54,6 +59,9 @@ public static class Functions
 
         if (type.Name == typeof(float).Name || type.Name == typeof(System.Single).Name)
             return "GetFloat";
+
+        if (type.Name == typeof(DateTimeOffset).Name)
+            return "GetFieldValue<DateTimeOffset>";
 
         return $"Get{type.Name}";
     }
@@ -200,7 +208,8 @@ public static class Functions
             builder.AppendLine();
         }
 
-        return builder.Remove(builder.Length - newLineLength, newLineLength).ToString();
+        var text = builder.Remove(builder.Length - newLineLength, newLineLength).ToString();
+        return string.IsNullOrEmpty(text)? "//There are no validation properties" : text;
     }
 
     public static bool ImplementsDomainInterface(GenerationItemModel model)
@@ -304,6 +313,9 @@ public static class Functions
 
         foreach (var property in properties)
         {
+            builder.AppendLine($"{tabs}/// <summary>");
+            builder.AppendLine($"{tabs}/// The {GetReadableString(property.Name)}.");
+            builder.AppendLine($"{tabs}/// </summary>");
             builder.AppendFormat("{0}private {1}{2} {3};{4}{4}", tabs, property.Type.IsArray ? "readonly " : "", GetModelName(model, property.Type, false), GetPrivateName(property), newLine);
         }
 
@@ -326,6 +338,9 @@ public static class Functions
 
             if (isSimple)
             {
+                builder.AppendLine($"{tabs}/// <summary>");
+                builder.AppendLine($"{tabs}/// Gets or sets the {GetReadableString(property.Name)}.");
+                builder.AppendLine($"{tabs}/// </summary>");
                 builder.AppendLine($"{tabs}[DataMember]");
                 builder.AppendLine($"{tabs}public {modelNameInterface} {property.Name} {{ get; set; }}");
             }
@@ -333,6 +348,9 @@ public static class Functions
             {
                 var privateName = GetPrivateName(property);
 
+                builder.AppendLine($"{tabs}/// <summary>");
+                builder.AppendLine($"{tabs}/// Gets or sets the {GetReadableString(property.Name)}.");
+                builder.AppendLine($"{tabs}/// </summary>");
                 builder.AppendLine($"{tabs}[DataMember]");
 
                 foreach (var navigation in property.Attributes.Where(x => x.Name == "NavigationAttribute"))
@@ -349,6 +367,9 @@ public static class Functions
                     : $"{tabs}public {modelNameInterface} {property.Name} => this.{privateName};");
 
                 builder.AppendLine();
+                builder.AppendLine($"{tabs}/// <summary>");
+                builder.AppendLine($"{tabs}/// The {GetReadableString(GetDomainTrackerName(property))}.");
+                builder.AppendLine($"{tabs}/// </summary>");
                 builder.AppendLine($"{tabs}[IgnoreDataMember]");
                 builder.AppendLine($"{tabs}public {GetDomainTracker(property)} {GetDomainTrackerName(property)} {{ get; }}");
             }
@@ -379,13 +400,14 @@ public static class Functions
             builder.AppendLine();
         }
 
-        return builder.Remove(builder.Length - newLineLength, newLineLength).ToString();
+        var text = builder.Remove(builder.Length - newLineLength, newLineLength).ToString();
+        return string.IsNullOrEmpty(text)? "// No properties to initialize." : text;
     }
 
     public static string GetIgnorePropertyList(GenerationItemModel model, List<PropertyDefinition> properties, string tabs)
     {
         if (!properties.Any())
-            return string.Empty;
+            return "// No properties to ignore.";
 
         var builder = new System.Text.StringBuilder();
 
@@ -397,13 +419,14 @@ public static class Functions
             builder.AppendLine();
         }
 
-        return builder.ToString();
+        var text = builder.ToString();
+        return string.IsNullOrEmpty(text) ? "// No properties to ignore." : text;
     }
 
     public static string GetMapPropertyList(GenerationItemModel model, List<PropertyDefinition> properties, string tabs)
     {
         if (!properties.Any())
-            return string.Empty;
+            return  "// No properties to map.";
 
         var builder = new System.Text.StringBuilder();
 
@@ -420,13 +443,14 @@ public static class Functions
             builder.AppendLine();
         }
 
-        return builder.ToString();
+        var text = builder.ToString();
+        return string.IsNullOrEmpty(text) ? "// No properties to map." : text;
     }
 
     public static string GetPropertyValidations(GenerationItemModel model, List<PropertyDefinition> properties, string tabs)
     {
         if (!properties.Any())
-            return string.Empty;
+            return "// No properties validations.";
 
         var builder = new System.Text.StringBuilder();
 
@@ -446,7 +470,8 @@ public static class Functions
             }
         }
 
-        return builder.ToString();
+        var text = builder.ToString();
+        return string.IsNullOrEmpty(text) ? "// No properties validations." : text;
     }
 
     public static string GetCrudMethods(GenerationItemModel model, List<PropertyDefinition> properties, string tabs)
@@ -468,6 +493,9 @@ public static class Functions
             ////////////////////////////////////////////////////
             // Add Method
             ////////////////////////////////////////////////////
+            builder.AppendLine($"{tabs}/// <summary>");
+            builder.AppendLine($"{tabs}/// Adds a new {GetReadableString(typeName)}.");
+            builder.AppendLine($"{tabs}/// </summary>");
             builder.AppendLine($"{tabs}public void Add{methodName}({typeName} entity)");
             builder.AppendLine($"{tabs}{{");
             builder.AppendLine(isArray
@@ -480,6 +508,9 @@ public static class Functions
             ////////////////////////////////////////////////////
             // Remove Method
             ////////////////////////////////////////////////////
+            builder.AppendLine($"{tabs}/// <summary>");
+            builder.AppendLine($"{tabs}/// Removes the {GetReadableString(typeName)}.");
+            builder.AppendLine($"{tabs}/// </summary>");
             builder.AppendLine($"{tabs}public void Remove{methodName}({typeName} entity)");
             builder.AppendLine($"{tabs}{{");
             builder.AppendLine(isArray
@@ -531,6 +562,9 @@ public static class Functions
             var methodName = typeName.Replace("View", string.Empty);
             var typeInterfaceName = GetModelName(model, type, true);
 
+            builder.AppendLine($"{tabs}/// <summary>");
+            builder.AppendLine($"{tabs}/// Maps the {GetReadableString(typeName)} from a domain interface.");
+            builder.AppendLine($"{tabs}/// </summary>");
             builder.AppendLine($"{tabs}private void Map{methodName}({typeName} entity, {typeInterfaceName} model)");
             builder.AppendLine($"{tabs}{{");
             builder.AppendLine($"{tabs}	entity.MapFrom(model);");
@@ -564,6 +598,9 @@ public static class Functions
             var typeName = GetModelName(model, type, false);
             var methodName = typeName.Replace("View", string.Empty);
 
+            builder.AppendLine($"{tabs}/// <summary>");
+            builder.AppendLine($"{tabs}/// Maps a list of {GetReadableString(property.Name)} from a list of domain interfaces.");
+            builder.AppendLine($"{tabs}/// </summary>");
             builder.AppendLine($"{tabs}private void Map{property.Name}({GetModelName(model, property.Type, true)} childContracts)");
             builder.AppendLine($"{tabs}{{");
 
@@ -583,7 +620,7 @@ public static class Functions
             builder.AppendLine($"{tabs}		}}");
             builder.AppendLine($"{tabs}		else");
             builder.AppendLine($"{tabs}		{{");
-            builder.AppendLine($"{tabs}			this.Add{methodName}({innerType.Name}.FromInterface(childContract));");
+            builder.AppendLine($"{tabs}			this.Add{methodName}({innerType.Name}.FromInterface(this.ServiceProvider, childContract));");
             builder.AppendLine($"{tabs}		}}");
             builder.AppendLine($"{tabs}	}}");
             builder.AppendLine();
@@ -637,11 +674,17 @@ public static class Functions
         {
             var type = (property.Type.IsArray ? property.Type.InnerObject : property.Type);
 
+            builder.AppendLine($"{tabs}/// <summary>");
+            builder.AppendLine($"{tabs}/// Removes the specified enumeration of {GetReadableString(type.Name)}.");
+            builder.AppendLine($"{tabs}/// </summary>");
             builder.AppendLine($"{tabs}private void Remove(IEnumerable<{GetModelName(model, type, false)}> entities)");
             builder.AppendLine($"{tabs}{{");
             builder.AppendLine($"{tabs}    this.GetRepository<I{type.Name}Repository>().Remove(entities);");
             builder.AppendLine($"{tabs}}}");
             builder.AppendLine();
+            builder.AppendLine($"{tabs}/// <summary>");
+            builder.AppendLine($"{tabs}/// Removes the specified enumeration of {GetReadableString(type.Name)}.");
+            builder.AppendLine($"{tabs}/// </summary>");
             builder.AppendLine($"{tabs}private async FrameworkTask RemoveAsync(IEnumerable<{GetModelName(model, type, false)}> entities)");
             builder.AppendLine($"{tabs}{{");
             builder.AppendLine($"{tabs}    await this.GetRepository<I{type.Name}Repository>().RemoveAsync(entities);");
@@ -665,7 +708,8 @@ public static class Functions
             builder.AppendLine($"{tabs}{prefix}this.Remove{postfix}(entity.{GetDomainTrackerName(property)}.Removed);");
         }
 
-        return builder.Remove(builder.Length - newLineLength, newLineLength).ToString();
+        var text = builder.Remove(builder.Length - newLineLength, newLineLength).ToString();
+        return string.IsNullOrEmpty(text)? "// There are no properties to remove." : text;
     }
 
     public static string GetMultiEditRemoval(GenerationItemModel model, List<PropertyDefinition> properties, string tabs, string prefix = "", string postfix = "")
@@ -680,7 +724,9 @@ public static class Functions
             builder.AppendLine($"{tabs}{prefix}this.Remove{postfix}(entityList.SelectMany(x => x.{GetDomainTrackerName(property)}.Removed));");
         }
 
-        return builder.Remove(builder.Length - newLineLength, newLineLength).ToString();
+        var text = builder.Remove(builder.Length - newLineLength, newLineLength).ToString() ?? "<missing>";
+        return string.IsNullOrEmpty(text)? "// There are no properties to remove." : text;
+
     }
 
     public static bool IsDataReaderProcedure(GenerationItemModel model)

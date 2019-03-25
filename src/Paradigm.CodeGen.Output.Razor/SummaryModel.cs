@@ -14,5 +14,10 @@ namespace Paradigm.CodeGen.Output.Razor
             this.Configuration = configuration;
             this.GenerationItems = generationItems;
         }
+
+        public override string ToString()
+        {
+            return $"Output File: '{Configuration.OutputFileName}'";
+        }
     }
 }

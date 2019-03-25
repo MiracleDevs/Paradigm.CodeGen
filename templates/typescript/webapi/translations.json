@@ -15,8 +15,8 @@
 { "Name": "System.Byte[]",                      "Translation": "string" },
 { "Name": "System.Boolean",                     "Translation": "boolean"},
 { "Name": "System.DateTime",                    "Translation": "Date"   },
+{ "Name": "System.TimeSpan",                    "Translation": "string"},
 { "Name": "System.Void",                        "Translation": "void"   },
-{ "Name": "System.TimeSpan",                    "Translation": "string" },
 { "Name": "System.Nullable<SByte>",             "Translation": "number" },
 { "Name": "System.Nullable<Int16>",             "Translation": "number" },
 { "Name": "System.Nullable<Int32>",             "Translation": "number" },
@@ -31,7 +31,7 @@
 { "Name": "System.Nullable<Char>",              "Translation": "string" },
 { "Name": "System.Nullable<Boolean>",           "Translation": "boolean"},
 { "Name": "System.Nullable<DateTime>",          "Translation": "Date"   },
-{ "Name": "System.Nullable<TimeSpan>",          "Translation": "string" },
+{ "Name": "System.Nullable<TimeSpan>",          "Translation": "string"},
 { "Name": "System.Type",                        "Translation": "Function"},
 { "Name": "System.Object",                      "Translation": "object" },
 { "Name": "System.Guid",                        "Translation": "string" }

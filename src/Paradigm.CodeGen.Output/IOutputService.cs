@@ -1,9 +1,10 @@
-﻿using Paradigm.CodeGen.Output.Models.Configuration;
+﻿using System.Threading.Tasks;
+using Paradigm.CodeGen.Output.Models.Configuration;
 
 namespace Paradigm.CodeGen.Output
 {
     public interface IOutputService
     {
-        void Generate(string fileName, OutputConfiguration configuration, int maxParallelism);
+        Task GenerateAsync(string fileName, OutputConfiguration configuration);
     }
 }

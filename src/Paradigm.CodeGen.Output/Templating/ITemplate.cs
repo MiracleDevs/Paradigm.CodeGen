@@ -7,5 +7,7 @@ namespace Paradigm.CodeGen.Output.Templating
         string FileName { get; }
 
         void Open(string fileName);
+
+        (int lineNumber, string line) GetLine(int lineNumber);
     }
 }

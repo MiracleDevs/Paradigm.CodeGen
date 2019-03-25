@@ -36,8 +36,6 @@ namespace Paradigm.CodeGen.Output.Razor
 
         private string SourcePath { get; set; }
 
-        private int MaxParallelism { get; set; }
-
         #endregion
 
         #region Constructor
@@ -55,39 +53,38 @@ namespace Paradigm.CodeGen.Output.Razor
 
         #region Public Methods
 
-        public void Generate(string fileName, OutputConfiguration configuration, int maxParallelism)
+        public async Task GenerateAsync(string fileName, OutputConfiguration configuration)
         {
-            this.LoggingService.Notice("Begining Code Generation...");
+            this.LoggingService.Notice("Beginning Code Generation...");
 
-            this.MaxParallelism = maxParallelism;
             this.SourcePath = Path.GetDirectoryName(fileName);
             this.LoadNativeTranslators(configuration);
             this.LoadTemplates(configuration);
-            this.ProcessOutputFiles(configuration);
+            await this.ProcessOutputFilesAsync(configuration);
 
             if (configuration.Summary == null)
                 return;
 
-            this.GenerateFinalSummaryAsync(fileName, configuration).Wait();
+            await this.GenerateFinalSummaryAsync(fileName, configuration);
         }
 
         #endregion
 
         #region Private Methods
 
-        private void ProcessOutputFiles(OutputConfiguration configuration)
+        private async Task ProcessOutputFilesAsync(OutputConfiguration configuration)
         {
-            Parallel.ForEach(configuration.OutputFiles, new ParallelOptions { MaxDegreeOfParallelism = this.MaxParallelism }, outputConfiguration =>
+            foreach(var outputConfiguration in configuration.OutputFiles)
             {
                 try
                 {
-                    this.ProcessCodeGenerationAsync(outputConfiguration).Wait();
+                    await this.ProcessCodeGenerationAsync(outputConfiguration);
                 }
                 catch (Exception e)
                 {
                     this.LoggingService.Error($"Problems found in output configuration file [{outputConfiguration.Name}]':{Environment.NewLine}{e.Message}");
                 }
-            });
+            }
         }
 
         private async Task ProcessCodeGenerationAsync(OutputFileConfiguration configuration)
@@ -95,15 +92,15 @@ namespace Paradigm.CodeGen.Output.Razor
             var template = TemplateCache.Instance.Get(configuration.TemplatePath);
             var generationItems = new List<GenerationItem>();
 
-            foreach (var objectDefiniton in this.TranslationService.GetObjectDefinitions().Where(x => IsMatch(x, configuration)))
+            foreach (var objectDefinition in this.TranslationService.GetObjectDefinitions().Where(x => IsMatch(x, configuration)))
             {
                 try
                 {
-                    generationItems.Add(await this.GenerateFileAsync(configuration, objectDefiniton, template));
+                    generationItems.Add(await this.GenerateFileAsync(configuration, objectDefinition, template));
                 }
                 catch (Exception e)
                 {
-                    this.LoggingService.Error($"Problems found in object definition '{objectDefiniton.Name}':{Environment.NewLine}{e.Message}");
+                    this.LoggingService.Error($"Problems found in object definition '{objectDefinition.Name}':{Environment.NewLine}{e.Message}");
                 }
             }
 

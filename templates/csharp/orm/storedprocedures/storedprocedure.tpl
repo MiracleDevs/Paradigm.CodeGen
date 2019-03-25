@@ -18,17 +18,26 @@
 using System;
 using System.Runtime.Serialization;
 using Paradigm.ORM.Data.StoredProcedures;
+using Paradigm.ORM.Data.Database;
 using @Model.Configuration["DomainNamespace"];
 using @Model.Configuration["MapperNamespace"];
+using @Model.Configuration["ConnectorNamespace"];
 
 namespace @Model.Configuration["Namespace"]
 {
-	[DataContract]
+    /// <summary>
+    /// Defines a stored procedure caller that calls to '@Raw(Model.Definition.Name)' procedure.
+    /// </summary>
 	public class @Raw(name) : @Raw(GetStoredProcedureBaseClass(Model)), @Raw(interfaceName)
     {
 		#region Constructor
 
-		public @(name)(IServiceProvider serviceProvider) : base(serviceProvider)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="@Raw(name)"/> class.
+        /// </summary>
+        /// <param name="serviceProvider">The service provider.</param>
+        /// <param name="connector">The database connector.</param>
+        public @(name)(IServiceProvider serviceProvider, @Model.Configuration["Connector"] connector) : base(serviceProvider, connector)
         {
         }
 

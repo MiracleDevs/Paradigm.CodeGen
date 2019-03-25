@@ -70,13 +70,12 @@ namespace Paradigm.CodeGen.UI.Console
                 var directories = commandLineApplication.Option("-d | --directory <directory>", "Indicates one or more directory path in which all the output configuration files will be used to generate code.", CommandOptionType.MultipleValue);
                 var topDirectoryOnly = commandLineApplication.Option("-t | --top-directory", "If directories were provided, indicates if the system should check only on the top directory.", CommandOptionType.NoValue);
                 var extension = commandLineApplication.Option("-e | --extension <extension>", "Indicates the extension of configuration files when searching inside directories.", CommandOptionType.SingleValue);
-                var maxParallelism = commandLineApplication.Option("-mp | --max-parallelism <amount-of-cores>", "Indicates the number of parallel tasks allowed.", CommandOptionType.SingleValue);
                 var output = commandLineApplication.Option("-o | --override <outputFile>:<typeName>", "Allows to override the configuration file and choose an Output File Configuration for a given Type Name. Take in account that any other configuration won't be executed if you override the configuration files.", CommandOptionType.MultipleValue);
 
                 commandLineApplication.HelpOption("-? | -h | --help");
                 commandLineApplication.OnExecute(() =>
                 {
-                    GetConfigurationFiles(fileNames.Values, directories.Values, topDirectoryOnly.HasValue(), extension.Value()).ToList().ForEach(x => ProcessConfigurationFile(x, GetOutputFileOverrides(output.Values), int.Parse(maxParallelism.Value() ?? "4")));
+                    GetConfigurationFiles(fileNames.Values, directories.Values, topDirectoryOnly.HasValue(), extension.Value()).ToList().ForEach(x => ProcessConfigurationFile(x, GetOutputFileOverrides(output.Values)));
                     return 0;
                 });
 
@@ -88,7 +87,7 @@ namespace Paradigm.CodeGen.UI.Console
             }
         }
 
-        private static void ProcessConfigurationFile(string configurationFileName, List<OutputFileOverride> outputFileOverrides, int maxParallelism)
+        private static void ProcessConfigurationFile(string configurationFileName, List<OutputFileOverride> outputFileOverrides)
         {
             LoggingService.Notice($"Starting to read configuration file [{Path.GetFileName(configurationFileName)}]");
 
@@ -102,7 +101,6 @@ namespace Paradigm.CodeGen.UI.Console
             // and adds all the typed names to the output file configuration for this run.
             OverrideConfigurationFiles(outputFileOverrides, configuration);
 
-            LoggingService.WriteLine($"Max Parallelism: {maxParallelism}");
             LoggingService.WriteLine($"Input  Type:     {configuration.Input.InputType}");
             LoggingService.WriteLine($"Output Type:     {configuration.Output.OutputType}");
 
@@ -123,7 +121,7 @@ namespace Paradigm.CodeGen.UI.Console
 
             // run input and output logic.
             inputService.Process(configurationFileName, configuration.Input);
-            outputService.Generate(configurationFileName, configuration.Output, maxParallelism);
+            outputService.GenerateAsync(configurationFileName, configuration.Output);
         }
 
         private static CodeGeneratorConfiguration GetConfigurationFile(string configurationFileName)

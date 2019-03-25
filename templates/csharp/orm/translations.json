@@ -15,8 +15,10 @@
   { "Name": "System.Byte[]",                      "Translation": "byte[]" },
   { "Name": "System.Boolean",                     "Translation": "bool"},
   { "Name": "System.DateTime",                    "Translation": "DateTime"},
+  { "Name": "System.DateTimeOffset",              "Translation": "DateTimeOffset"},
   { "Name": "System.TimeSpan",                    "Translation": "TimeSpan"},
   { "Name": "System.Void",                        "Translation": "void"   },
+  { "Name": "System.Guid",                        "Translation": "Guid"   },
   { "Name": "System.Nullable<SByte>",             "Translation": "sbyte?" },
   { "Name": "System.Nullable<Int16>",             "Translation": "short?" },
   { "Name": "System.Nullable<Int32>",             "Translation": "int?" },
@@ -31,7 +33,9 @@
   { "Name": "System.Nullable<Char>",              "Translation": "char?" },
   { "Name": "System.Nullable<Boolean>",           "Translation": "bool?"},
   { "Name": "System.Nullable<DateTime>",          "Translation": "DateTime?" },
-  { "Name": "System.Nullable<TimeSpan>",          "Translation": "TimeSpan?" }
+  { "Name": "System.Nullable<TimeSpan>",          "Translation": "TimeSpan?" },
+  { "Name": "System.Nullable<Guid>",              "Translation": "Guid?"   },
+  { "Name": "System.Nullable<DateTimeOffset>",    "Translation": "DateTimeOffset?" }
 ]
 
 

@@ -19,6 +19,10 @@ using @Model.Configuration["DomainNamespace"];
 
 namespace @Model.Configuration["Namespace"]
 {
+    /// <summary>
+    /// Provides an interface for @Raw(GetReadableString(Model.Definition.Name)) database access objects
+    /// that allows to create, update, delete and select objects from the database.
+    /// </summary>
 	public partial interface @Raw(name) : IDatabaseAccess<@Raw(entityName)>
 	{
 		@if (navigationProperties.Any())
@@ -30,6 +34,9 @@ namespace @Model.Configuration["Namespace"]
 				var typeName = (property.Type.IsArray ? property.Type.InnerObject.Name : property.Type.Name) + "DatabaseAccess";
 				var interfaceTypeName = "I" + typeName;
 <text>
+        /// @Raw("<summary>")
+        /// Gets or sets the @Raw(GetReadableString(typeName)).
+        /// @Raw("</summary>")
 		@Raw(interfaceTypeName) @Raw(typeName) { get; }
 </text>
 			}

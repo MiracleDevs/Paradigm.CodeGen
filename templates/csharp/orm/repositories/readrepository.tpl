@@ -24,11 +24,18 @@ using @Model.Configuration["DomainRepositoriesNamespace"];
 
 namespace @Model.Configuration["Namespace"]
 {
+    /// <summary>
+    /// Represents a @Raw(GetReadableString(Model.Definition.Name)) repository that can read but not modify the entities.
+    /// </summary>
 	public partial class @Raw(name) : ReadRepositoryBase<@Raw(entityName), @Raw(GetPrimaryKeyForRepositories(Model)), @databaseAccess>, @Raw(interfaceName)
 	{
 		#region Constructor
 
-	    public @(name)(IServiceProvider serviceProvider) : base(serviceProvider, serviceProvider.GetService<@databaseAccess>(), serviceProvider.GetService<IUnitOfWork>())
+        /// <summary>
+        /// Initializes a new instance of the <see cref="@Raw(name)"/> class.
+        /// </summary>
+        /// <param name="serviceProvider">The service provider.</param>
+	    public @(name)(IServiceProvider serviceProvider) : base(serviceProvider, serviceProvider.GetRequiredService<@databaseAccess>(), serviceProvider.GetRequiredService<IUnitOfWork>())
 	    {
 	    }
 
