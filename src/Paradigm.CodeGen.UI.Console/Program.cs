@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.Extensions.CommandLineUtils;
+using Newtonsoft.Json;
+using Paradigm.CodeGen.Input;
 using Paradigm.CodeGen.Logging;
+using Paradigm.CodeGen.Output;
+using Paradigm.CodeGen.Output.Models.Configuration;
 using Paradigm.Core.DependencyInjection;
+using Paradigm.Core.Extensions;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Paradigm.Core.Assemblies;
-using Newtonsoft.Json;
 using System.Runtime.Loader;
-using Paradigm.CodeGen.Input;
-using Paradigm.CodeGen.Output;
-using Microsoft.Extensions.CommandLineUtils;
-using Paradigm.CodeGen.Output.Models.Configuration;
-using Paradigm.Core.Extensions;
 
 namespace Paradigm.CodeGen.UI.Console
 {
@@ -50,15 +49,49 @@ namespace Paradigm.CodeGen.UI.Console
 
         private static void ConfigureAssemblyLoader()
         {
+            AssemblyLoader = new AssemblyLoader(GetNugetDirectories());
+
+            AssemblyLoadContext.Default.Resolving += (alc, an) =>
+            {
+                LoggingService.WriteLine($" - Requesting assembly [{an.Name}]");
+                return AssemblyLoader.ResolveAssembly(an, alc, AssemblyLoader.OptionalDirectories);
+            };
+        }
+
+        private static IEnumerable<string> GetNugetDirectories()
+        {
+            var directories = new List<string>();
             var location = typeof(Program).GetAssembly().Location;
             var path = Path.GetDirectoryName(location);
 
-            AssemblyLoader = new AssemblyLoader(new[] { path }, true);
-            AssemblyLoadContext.Default.Resolving += (alc, an) =>
-            {
-                LoggingService.WriteLine($"\nRequesting assembly [{an.Name}]");
-                return AssemblyLoader.ResolveAssembly(an, alc, AssemblyLoader.OptionalDirectories, AssemblyLoader.NugetLookUp);
-            };
+            directories.Add(path);
+
+            var mac1 = Path.GetFullPath("~/.local/share/NuGet/Cache");
+            var mac2 = Path.GetFullPath("~/.nuget/packages");
+            var win1 = Path.Combine(Environment.ExpandEnvironmentVariables("%LOCALAPPDATA%"), "NuGet\\Cache\\");
+            var win2 = Path.Combine(Environment.ExpandEnvironmentVariables("%USERPROFILE%"), ".nuget\\packages\\");
+            var linux1 = Path.GetFullPath("~/.local/share/NuGet/Cache");
+            var linux2 = Path.GetFullPath("~/.nuget/packages");
+
+            if (Directory.Exists(mac1))
+                directories.Add(mac1);
+
+            if (Directory.Exists(mac2))
+                directories.Add(mac2);
+
+            if (Directory.Exists(win1))
+                directories.Add(win1);
+
+            if (Directory.Exists(win2))
+                directories.Add(win2);
+
+            if (Directory.Exists(linux1))
+                directories.Add(linux1);
+
+            if (Directory.Exists(linux2))
+                directories.Add(linux2);
+     
+            return directories;
         }
 
         private static void ParseCommandLine(params string[] args)
@@ -95,9 +128,11 @@ namespace Paradigm.CodeGen.UI.Console
             var configuration = GetConfigurationFile(configurationFileName);
 
             if (configuration == null)
+            {
                 return;
+            }
 
-            // overrides the outfile typematching adding "NameIn" type matcher,
+            // overrides the outfile type matching adding "NameIn" type matcher,
             // and adds all the typed names to the output file configuration for this run.
             OverrideConfigurationFiles(outputFileOverrides, configuration);
 
@@ -151,9 +186,13 @@ namespace Paradigm.CodeGen.UI.Console
                 var fullFileName = Path.IsPathRooted(fileName) ? fileName : Path.GetFullPath($"{path}/{fileName}");
 
                 if (File.Exists(fullFileName))
+                {
                     files.Add(fullFileName);
+                }
                 else
+                {
                     LoggingService.Error($"File not found [{fullFileName}]");
+                }
             }
 
             foreach (var directory in directories)
@@ -162,9 +201,13 @@ namespace Paradigm.CodeGen.UI.Console
                 LoggingService.WriteLine($"     Processing Directory [{fullDirectoryPath}]");
 
                 if (Directory.Exists(fullDirectoryPath))
+                {
                     files.AddRange(Directory.EnumerateFiles(fullDirectoryPath, $"*.{extension ?? "json"}", topDirectoryOnly ? SearchOption.TopDirectoryOnly : SearchOption.AllDirectories));
+                }
                 else
+                {
                     LoggingService.Error($"Directory not found [{fullDirectoryPath}]");
+                }
             }
 
             LoggingService.WriteLine(string.Empty);
@@ -183,7 +226,9 @@ namespace Paradigm.CodeGen.UI.Console
         private static void OverrideConfigurationFiles(IReadOnlyCollection<OutputFileOverride> outputFileOverrides, CodeGeneratorConfiguration configuration)
         {
             if (outputFileOverrides == null || !outputFileOverrides.Any())
+            {
                 return;
+            }
 
             foreach (var outputFile in configuration.Output.OutputFiles.ToList())
             {

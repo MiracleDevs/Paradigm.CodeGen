@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Loader;
 using Microsoft.Extensions.DependencyInjection;
 using Paradigm.CodeGen.Input.Models.Configuration;
 using Paradigm.CodeGen.Input.Models.Definitions;
 using Paradigm.CodeGen.Input.NetAssembly.Collections.Interfaces;
 using Paradigm.CodeGen.Logging;
-using Paradigm.Core.Assemblies;
 
 namespace Paradigm.CodeGen.Input.NetAssembly
 {
@@ -43,14 +43,14 @@ namespace Paradigm.CodeGen.Input.NetAssembly
 
             var directory = Path.GetDirectoryName(fileName);
             var assemblyPath = parameters[AssemblyPathParameterName];
-            var path = Path.GetFullPath($"{directory}/{assemblyPath}");
+            var path = Path.IsPathRooted(assemblyPath)? assemblyPath : Path.GetFullPath($"{directory}/{assemblyPath}");
          
             if (!File.Exists(path))
                 throw new Exception($"The path '{path}' specified to look up for the assembly does not exist.");
 
             var assemblyLoader = this.ServiceProvider.GetService<AssemblyLoader>();
             assemblyLoader.AddOptionalDirectory(Path.GetDirectoryName(path));
-            var assembly = assemblyLoader.LoadFromAssemblyPath(path);
+            var assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(path);
 
             if (assembly == null)
                 throw new Exception("The specified assembly couldn't be loaded.");
@@ -61,7 +61,7 @@ namespace Paradigm.CodeGen.Input.NetAssembly
                 var type = assembly.GetType(typeName);
 
                 if (type == null)
-                    throw new Exception($"The specified entry point type '{typeName}' couldn't be loaded.");
+                    throw new Exception($"The specified entry point type '{typeName}' couldn't be loaded from '{assembly.FullName}'.");
 
                 this.ProcessType(type);
             }
