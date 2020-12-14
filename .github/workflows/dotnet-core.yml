@@ -1,4 +1,4 @@
-name: .NET Core
+name: CodeGen Tool
 
 on:
   push:

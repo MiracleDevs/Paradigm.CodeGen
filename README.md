@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/MiracleDevs/Paradigm.CodeGen.svg?branch=master)](https://travis-ci.org/MiracleDevs/Paradigm.CodeGen)
+[![Build Status](https://github.com/MiracleDevs/Paradigm.CodeGen/workflows/CodeGen%20Tool/badge.svg)](https://github.com/MiracleDevs/Paradigm.CodeGen/actions)
 
 # Paradigm.CodeGen
 Code generation / scaffolding tool making extensive use of razor as templating language.

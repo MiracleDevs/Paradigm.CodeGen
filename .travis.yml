@@ -1,8 +1,0 @@
-language: csharp
-dist: trusty
-dotnet: 5.0.101
-install:
-- dotnet restore ./src/Paradigm.CodeGen.sln
-script:
-- dotnet build ./src/Paradigm.CodeGen.sln
-- dotnet test ./src/Paradigm.CodeGen.Tests/Paradigm.CodeGen.Tests.csproj
