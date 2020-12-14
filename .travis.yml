@@ -1,6 +1,6 @@
 language: csharp
 dist: trusty
-dotnet: 2.2
+dotnet: 5.0.101
 install:
 - dotnet restore ./src/Paradigm.CodeGen.sln
 script:
