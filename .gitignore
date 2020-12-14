@@ -14,5 +14,6 @@ TestResults
 .vs
 .vscode
 .deploy
+dist
 nuget.exe
 node_modules
