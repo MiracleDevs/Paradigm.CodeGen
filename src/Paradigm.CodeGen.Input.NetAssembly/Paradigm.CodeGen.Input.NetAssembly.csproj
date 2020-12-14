@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
-    <PackageReference Include="Paradigm.Core.Extensions" Version="2.0.5" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Paradigm.Core.Extensions" Version="2.1.0" />
   </ItemGroup>
 
   <ItemGroup>
