@@ -90,6 +90,11 @@ Command Line Arguments
 
 Change log
 ---
+
+Version `2.1.0`
+- Updated nuget dependencies.
+- Updated projects to .NET 5.0 and Standard 2.1.0.
+
 Version `2.0.3`
 - Updated nuget dependencies.
 - Modified the output service to run the code generation in parallel.
