@@ -68,10 +68,10 @@ If you are planning to use codegen in several projects, we recommend to add the 
 
 | OS | Zip File |
 |-|-|
-| Windows x86 | [Download](https://raw.githubusercontent.com/MiracleDevs/Paradigm.CodeGen/master/dist/codegen.win-x86.zip) |
-| Windows x64 | [Download](https://raw.githubusercontent.com/MiracleDevs/Paradigm.CodeGen/master/dist/codegen.win-x64.zip) |
-| Linux x64   | [Download](https://raw.githubusercontent.com/MiracleDevs/Paradigm.CodeGen/master/dist/codegen.linux-x64.zip) |
-| OSX x64     | [Download](https://raw.githubusercontent.com/MiracleDevs/Paradigm.CodeGen/master/dist/codegen.osx-x64.zip) |
+| Windows x86 | [Download](https://github.com/MiracleDevs/Paradigm.CodeGen/releases/download/v2.1.0/codegen.win-x86.zip) |
+| Windows x64 | [Download](https://github.com/MiracleDevs/Paradigm.CodeGen/releases/download/v2.1.0/codegen.win-x64.zip) |
+| Linux x64   | [Download](https://github.com/MiracleDevs/Paradigm.CodeGen/releases/download/v2.1.0/codegen.linux-x64.tar.gz) |
+| OSX x64     | [Download](https://github.com/MiracleDevs/Paradigm.CodeGen/releases/download/v2.1.0/codegen.osx-x64.zip) |
 
 
 Command Line Arguments

@@ -13,7 +13,7 @@ noclsArg=$5
 deployDir=../.deploy/$tool
 distDir=../dist
 ubuntu16=ubuntu.16.04-x64
-zipFile="$tool.$runtime.zip"
+zipFile="$tool.$runtime.tar.gz"
 
 if [[ "$tool" == "" ]]; then error "Missing tool name." ; buildFailed ; fi
 if [[ "$toolProject" == "" ]]; then error "Missing tool path." ; buildFailed ; fi
@@ -31,6 +31,7 @@ execute "dotnet publish $toolProject -c Release -f net5.0 -r $runtime -o $deploy
 
 execute "rm -rf $distDir/$zipFile"
 
-execute "tar -zcvf $distDir/$zipFile $deployDir/$runtime/" "gzip $distDir/$zipFile"
-
+pushd $deployDir/$runtime/
+execute "tar -zcvf ../../$distDir/$zipFile ./" "gzip $distDir/$zipFile"
+popd
 buildSuccessfully

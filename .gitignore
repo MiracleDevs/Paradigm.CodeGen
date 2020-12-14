@@ -11,9 +11,10 @@ bin
 obj
 packages
 TestResults
-.vs
-.vscode
-.deploy
+.vs/
+.vscode/
+.deploy/
+.nuget/
 dist
 nuget.exe
 node_modules
