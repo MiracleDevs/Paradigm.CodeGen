@@ -10,17 +10,11 @@ namespace Paradigm.CodeGen.UI.Console
         {
             var values = configuration.Split(':');
 
-            if (values != null && values.Length == 2)
-            {
-                this.OutputFileConfigurationName = values[0];
-                this.TypeName = values[1];
-            }
-        }
+            if (values.Length != 2) 
+                return;
 
-        public OutputFileOverride(string outputFileConfigurationName, string typeName)
-        {
-            this.OutputFileConfigurationName = outputFileConfigurationName;
-            this.TypeName = typeName;
+            this.OutputFileConfigurationName = values[0];
+            this.TypeName = values[1];
         }
     }
 }

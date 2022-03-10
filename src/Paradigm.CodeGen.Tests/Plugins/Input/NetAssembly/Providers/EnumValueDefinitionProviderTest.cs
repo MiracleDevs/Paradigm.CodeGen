@@ -58,8 +58,8 @@ namespace Paradigm.CodeGen.Tests.Plugins.Input.NetAssembly.Providers
 
             foreach (var enumRes in zippedEnumValueDefinition)
             {
-                enumRes["EnumValue"].ToString().Should().Equals(((EnumValueDefinition)enumRes["EnumValueDefinition"]).Name);
-                this.GetEnumValue(baseType, (Enum)enumRes["EnumValue"]).Should().Equals(((EnumValueDefinition)enumRes["EnumValueDefinition"]).Value);
+                enumRes["EnumValue"].ToString().Should().Be(((EnumValueDefinition)enumRes["EnumValueDefinition"]).Name);
+                this.GetEnumValue(baseType, (Enum)enumRes["EnumValue"]).Should().Be(((EnumValueDefinition)enumRes["EnumValueDefinition"]).Value);
             }
 
         }
@@ -87,8 +87,8 @@ namespace Paradigm.CodeGen.Tests.Plugins.Input.NetAssembly.Providers
 
             foreach (var enumRes in zippedEnumValueDefinition)
             {
-                enumRes["EnumValue"].ToString().Should().Equals(((EnumValueDefinition)enumRes["EnumValueDefinition"]).Name);
-                this.GetEnumValue(baseType, (Enum)enumRes["EnumValue"]).Should().Equals(((EnumValueDefinition)enumRes["EnumValueDefinition"]).Value);
+                enumRes["EnumValue"].ToString().Should().Be(((EnumValueDefinition)enumRes["EnumValueDefinition"]).Name);
+                this.GetEnumValue(baseType, (Enum)enumRes["EnumValue"]).Should().Be(((EnumValueDefinition)enumRes["EnumValueDefinition"]).Value);
             }
 
         }

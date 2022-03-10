@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "Paradigm.CodeGen.UI.Console": {
-      "commandName": "Project",
-      "commandLineArgs": "-f c:\\Repositories\\gitlab\\timetracker\\build\\configuration\\proxies\\address-type.1.json"
-    }
-  }
-}

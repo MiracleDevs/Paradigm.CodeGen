@@ -1,9 +1,9 @@
-[![Build Status](https://github.com/MiracleDevs/Paradigm.CodeGen/workflows/Paradigm%20CodeGen/badge.svg)](https://github.com/MiracleDevs/Paradigm.CodeGen/actions)
+[![Paradigm CodeGen](https://github.com/MiracleDevs/Paradigm.CodeGen/actions/workflows/dotnet-core.yml/badge.svg)](https://github.com/MiracleDevs/Paradigm.CodeGen/actions/workflows/dotnet-core.yml)
 
 # Paradigm.CodeGen
 Code generation / scaffolding tool making extensive use of razor as templating language.
 Codegen is fully configurable and pluginable, and can produce output in any language.
-Currenly is being used by the [Paradigm.ORM](https://github.com/MiracleDevs/Paradigm.ORM.git)
+Currently is being used by the [Paradigm.ORM](https://github.com/MiracleDevs/Paradigm.ORM.git)
 to generate dbfirst classes, and to generate typescript services and model for the Paradigm.AngularJS
 and Paradigm.Angular wrappers.
 
@@ -68,10 +68,10 @@ If you are planning to use codegen in several projects, we recommend to add the 
 
 | OS | Zip File |
 |-|-|
-| Windows x86 | [Download](https://github.com/MiracleDevs/Paradigm.CodeGen/releases/download/v2.1.0/codegen.win-x86.zip) |
-| Windows x64 | [Download](https://github.com/MiracleDevs/Paradigm.CodeGen/releases/download/v2.1.0/codegen.win-x64.zip) |
-| Linux x64   | [Download](https://github.com/MiracleDevs/Paradigm.CodeGen/releases/download/v2.1.0/codegen.linux-x64.tar.gz) |
-| OSX x64     | [Download](https://github.com/MiracleDevs/Paradigm.CodeGen/releases/download/v2.1.0/codegen.osx-x64.zip) |
+| Windows x86 | [Download](https://github.com/MiracleDevs/Paradigm.CodeGen/releases/latest/download/codegen.win-x86.tar.gz) |
+| Windows x64 | [Download](https://github.com/MiracleDevs/Paradigm.CodeGen/releases/latest/download/codegen.win-x64.tar.gz) |
+| Linux x64   | [Download](https://github.com/MiracleDevs/Paradigm.CodeGen/releases/latest/download/codegen.linux-x64.tar.gz) |
+| OSX x64     | [Download](https://github.com/MiracleDevs/Paradigm.CodeGen/releases/latest/download/codegen.osx-x64.tar.gz) |
 
 
 Command Line Arguments
@@ -90,6 +90,9 @@ Command Line Arguments
 
 Change log
 ---
+Version `3.0.0`
+- Updated nuget dependencies.
+- Updated projects to .NET 6.0.
 
 Version `2.1.0`
 - Updated nuget dependencies.

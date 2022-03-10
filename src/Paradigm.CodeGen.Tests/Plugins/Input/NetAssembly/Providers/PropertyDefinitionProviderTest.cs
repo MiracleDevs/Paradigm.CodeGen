@@ -69,7 +69,7 @@ namespace Paradigm.CodeGen.Tests.Plugins.Input.NetAssembly.Providers
             { 
                 var processed = this.ContainerFixture.PropertyProvider.Process(this.ContainerFixture.PropertyProvider.GetFromSource(property), objectDefinitions, property);
                 processed.Name.Should().Be(property.Name);
-                processed.Attributes.Count.Should().Equals(property.CustomAttributes.Count());
+                processed.Attributes.Count.Should().Be(property.CustomAttributes.Count());
                 processed.Type.FullName.Should().Be(property.PropertyType.GetReadableFullName());
             }
         }

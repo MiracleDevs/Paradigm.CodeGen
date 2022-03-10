@@ -139,7 +139,7 @@ namespace Paradigm.CodeGen.UI.Console
             LoggingService.WriteLine($"Input  Type:     {configuration.Input.InputType}");
             LoggingService.WriteLine($"Output Type:     {configuration.Output.OutputType}");
 
-            // inject dependencies and start input and ouput plugins.
+            // inject dependencies and start input and output plugins.
             var builder = DependencyBuilderFactory.Create(DependencyLibrary.Microsoft);
 
             builder.RegisterInstance<ILoggingService, ConsoleLoggingService>((ConsoleLoggingService)LoggingService);

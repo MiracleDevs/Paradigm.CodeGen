@@ -64,8 +64,8 @@ namespace Paradigm.CodeGen.Tests.Plugins.Input.NetAssembly.Providers
             { 
                 var processed = this.ContainerFixture.ParameterProvider.Process(this.ContainerFixture.ParameterProvider.GetFromSource(parameter), objectDefinitions, parameter);
                 processed.Name.Should().Be(parameter.Name);
-                processed.Type.FullName.Should().Equals(parameter.ParameterType.GetReadableFullName());
-                processed.Attributes.Count.Should().Equals(parameter.CustomAttributes.Count());
+                processed.Type.FullName.Should().Be(parameter.ParameterType.GetReadableFullName());
+                processed.Attributes.Count.Should().Be(parameter.CustomAttributes.Count());
             }
         }
 

@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Paradigm.Core.Extensions" Version="2.1.0" />
+    <PackageReference Include="Paradigm.Core.Extensions" Version="3.0.0" />
     <PackageReference Include="RazorLight" Version="2.0.0-beta1" />
   </ItemGroup>
 

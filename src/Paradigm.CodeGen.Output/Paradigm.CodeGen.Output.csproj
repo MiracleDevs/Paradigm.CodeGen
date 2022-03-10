@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Paradigm.Core.Assemblies" Version="2.1.0" />
-    <PackageReference Include="Paradigm.Core.DependencyInjection" Version="2.1.0" />
+    <PackageReference Include="Paradigm.Core.Assemblies" Version="3.0.0" />
+    <PackageReference Include="Paradigm.Core.DependencyInjection" Version="3.0.0" />
     <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Serialization.Formatters" Version="4.3.0" />
   </ItemGroup>
